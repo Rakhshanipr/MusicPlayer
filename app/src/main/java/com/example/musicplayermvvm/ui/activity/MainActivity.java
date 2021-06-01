@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
+import com.example.musicplayermvvm.databinding.ActivityMainBinding;
 
 import java.util.List;
 
@@ -18,13 +19,21 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
 
+    //region defind static method and variable
     public static final int REQUEST_CODE_GET_PERMISSION = 1;
+    //endregion
+
+    ActivityMainBinding mMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        mMainBinding=ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mMainBinding.getRoot());
+
         getPermission();
+
     }
 
     private void getPermission() {

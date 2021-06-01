@@ -65,10 +65,8 @@ public class MusicRepository {
 
             Music music=new Music(title,artist,album,duration,data);
             sMusicList.add(music);
-
-            Toast.makeText(mContext,"find!!!!!!!!!",Toast.LENGTH_LONG);
-
             songsCursor.moveToNext();
         }
     }
+
 }
