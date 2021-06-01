@@ -12,6 +12,7 @@ import android.os.Bundle;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.databinding.ActivityMainBinding;
+import com.example.musicplayermvvm.veiwmodel.MainActivityViewModel;
 
 import java.util.List;
 
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mMainBinding.getRoot());
 
         getPermission();
+
+        Initial();
+    }
+
+    private void Initial() {
+
+        mMainBinding.viewPager2Main.setAdapter(
+                MainActivityViewModel.CreateMainViewPager(this)
+        );
 
     }
 
