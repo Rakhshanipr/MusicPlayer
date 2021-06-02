@@ -3,7 +3,8 @@ package com.example.musicplayermvvm.data.repository;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.widget.Toast;
+
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.musicplayermvvm.data.model.Music;
 
@@ -13,7 +14,6 @@ import java.util.List;
 public class MusicRepository {
 
     //region defind static method and variable
-    private static List<Music> sMusicList;
 
     private static MusicRepository sMusicRepository;
 
@@ -25,10 +25,18 @@ public class MusicRepository {
     //endregion
 
     Context mContext;
+    private List<Music> mMusicList;
+
+
+    private MutableLiveData<List<Music>> mListMutableLiveData=new MutableLiveData<>();
 
     private MusicRepository(Context context){
         mContext=context;
-        sMusicList=new ArrayList<>();
+        mMusicList =new ArrayList<>();
+    }
+
+    public MutableLiveData<List<Music>> getListMutableLiveData() {
+        return mListMutableLiveData;
     }
 
     public void setMusicList(){
@@ -64,9 +72,10 @@ public class MusicRepository {
             //endregion
 
             Music music=new Music(title,artist,album,duration,data);
-            sMusicList.add(music);
+            mMusicList.add(music);
             songsCursor.moveToNext();
         }
+        mListMutableLiveData.setValue(mMusicList);
     }
 
 }

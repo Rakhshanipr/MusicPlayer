@@ -12,6 +12,14 @@ public class MusicInfoListViewModel extends ViewModel {
         mMusic=music;
     }
 
+    public Music getMusic() {
+        return mMusic;
+    }
+
+    public void setMusic(Music music) {
+        mMusic = music;
+    }
+
     public String getTitle(){
         return mMusic.getName();
     }

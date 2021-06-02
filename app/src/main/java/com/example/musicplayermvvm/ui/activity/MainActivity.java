@@ -39,11 +39,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Initial() {
-
         mMainBinding.viewPager2Main.setAdapter(
                 MainActivityViewModel.CreateMainViewPager(this)
         );
-
     }
 
     private void getPermission() {

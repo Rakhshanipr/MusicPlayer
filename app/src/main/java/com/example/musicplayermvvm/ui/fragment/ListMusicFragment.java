@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -12,13 +13,18 @@ import android.view.ViewGroup;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.databinding.FragmentListMusicBinding;
+import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
+import com.example.musicplayermvvm.veiwmodel.MusicInfoListViewModel;
 
 public class ListMusicFragment extends Fragment {
 
     //region defind static method and variable
+
     public static final String ARGS_STATE = "com.example.musicplayermvvm.ui.fragment.state_fragment";
 
     //endregion
+
+    ListMusicFragmentViewModel mMusicFragmentViewModel;
 
     FragmentListMusicBinding mListMusicBinding;
 
@@ -37,6 +43,11 @@ public class ListMusicFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mMusicFragmentViewModel=new
+                ViewModelProvider(requireActivity()).get(ListMusicFragmentViewModel.class);
+        mMusicFragmentViewModel.setContext(getContext());
+
     }
 
     @Override
@@ -52,7 +63,11 @@ public class ListMusicFragment extends Fragment {
 
     private void Initial() {
 
-        mListMusicBinding.recyclerViewList.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mListMusicBinding.recyclerViewList.setAdapter();
+        mListMusicBinding.recyclerViewList.setLayoutManager(new
+                LinearLayoutManager(getContext()));
+
+        mListMusicBinding.recyclerViewList.setAdapter(
+                mMusicFragmentViewModel.createAdapterRecyclerView());
+
     }
 }
