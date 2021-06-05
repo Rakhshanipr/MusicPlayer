@@ -24,6 +24,7 @@ public class RecyclerViewListMusicAdapter
         extends RecyclerView.Adapter<RecyclerViewListMusicAdapter.MusicHolder> {
 
     Context mContext;
+
     List<Music> mMusicList;
 
     SetMusicCover mSetMusicCover;
@@ -67,20 +68,16 @@ public class RecyclerViewListMusicAdapter
         public MusicHolder(MusicInfoListBinding musicInfoListBinding) {
             super(musicInfoListBinding.getRoot());
             mMusicInfoListBinding = musicInfoListBinding;
-
-            //ToDo create new binding and at bind change data
+            mMusicInfoListBinding.setInfoViewModel(
+                    new MusicInfoListViewModel(null)
+            );
 
         }
-
         void bind(Music music) {
 
             mMusic = music;
 
-            //TODO change it and observe
-
-            mMusicInfoListBinding.setInfoViewModel(
-                    new MusicInfoListViewModel(music)
-            );
+            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
 
             mSetMusicCover.queueImageCover(music.getFilePath()
                     ,mMusicInfoListBinding.imageView);
