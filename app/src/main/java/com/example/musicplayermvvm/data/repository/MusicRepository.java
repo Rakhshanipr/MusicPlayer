@@ -22,11 +22,11 @@ public class MusicRepository {
             sMusicRepository=new MusicRepository(context);
         return sMusicRepository;
     }
+
     //endregion
 
     Context mContext;
     private List<Music> mMusicList;
-
 
     private MutableLiveData<List<Music>> mListMutableLiveData=new MutableLiveData<>();
 
@@ -49,6 +49,7 @@ public class MusicRepository {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.DATA
+
         };
 
 
@@ -77,5 +78,4 @@ public class MusicRepository {
         }
         mListMutableLiveData.setValue(mMusicList);
     }
-
 }

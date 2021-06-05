@@ -1,6 +1,7 @@
 package com.example.musicplayermvvm.data.model;
 
 public class Music {
+
     private String mName;
     private String mArtist;
     private String mAlbum;

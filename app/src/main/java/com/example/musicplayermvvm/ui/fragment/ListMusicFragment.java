@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class ListMusicFragment extends Fragment {
                 LinearLayoutManager(getContext()));
 
         mListMusicBinding.recyclerViewList.setAdapter(
-                mMusicFragmentViewModel.createAdapterRecyclerView());
+                mMusicFragmentViewModel.createAdapterRecyclerView(new Handler()));
 
     }
 }

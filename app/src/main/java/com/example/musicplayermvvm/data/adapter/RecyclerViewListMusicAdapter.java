@@ -1,8 +1,10 @@
 package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.MusicInfoListBinding;
+import com.example.musicplayermvvm.thread.SetMusicCover;
 import com.example.musicplayermvvm.veiwmodel.MusicInfoListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class RecyclerViewListMusicAdapter
         extends RecyclerView.Adapter<RecyclerViewListMusicAdapter.MusicHolder> {
@@ -24,9 +26,12 @@ public class RecyclerViewListMusicAdapter
     Context mContext;
     List<Music> mMusicList;
 
-    public RecyclerViewListMusicAdapter(Context context) {
-        mContext=context;
-        mMusicList=new ArrayList<>();
+    SetMusicCover mSetMusicCover;
+
+    public RecyclerViewListMusicAdapter(Context context,SetMusicCover musicCover) {
+        mContext = context;
+        mMusicList = new ArrayList<>();
+        mSetMusicCover=musicCover;
     }
 
     public void setMusicList(List<Music> musicList) {
@@ -36,11 +41,10 @@ public class RecyclerViewListMusicAdapter
     @Override
     public MusicHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater= LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
 
-        MusicInfoListBinding musicInfoListBinding= DataBindingUtil.inflate(
-                inflater, R.layout.music_info_list,parent,false
-        );
+        MusicInfoListBinding musicInfoListBinding = DataBindingUtil.inflate(
+                inflater, R.layout.music_info_list, parent, false);
 
         return new MusicHolder(musicInfoListBinding);
     }
@@ -55,21 +59,32 @@ public class RecyclerViewListMusicAdapter
         return mMusicList.size();
     }
 
-    class MusicHolder extends RecyclerView.ViewHolder{
+    class MusicHolder extends RecyclerView.ViewHolder {
 
         MusicInfoListBinding mMusicInfoListBinding;
         Music mMusic;
 
         public MusicHolder(MusicInfoListBinding musicInfoListBinding) {
             super(musicInfoListBinding.getRoot());
-            mMusicInfoListBinding=musicInfoListBinding;
-            musicInfoListBinding.setInfoViewModel(new MusicInfoListViewModel(mMusic));
+            mMusicInfoListBinding = musicInfoListBinding;
+
+            //ToDo create new binding and at bind change data
+
         }
 
-        void bind(Music music){
-            mMusic=music;
-            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
+        void bind(Music music) {
+
+            mMusic = music;
+
+            //TODO change it and observe
+
+            mMusicInfoListBinding.setInfoViewModel(
+                    new MusicInfoListViewModel(music)
+            );
+
+            mSetMusicCover.queueImageCover(music.getFilePath()
+                    ,mMusicInfoListBinding.imageView);
+
         }
     }
-
 }
