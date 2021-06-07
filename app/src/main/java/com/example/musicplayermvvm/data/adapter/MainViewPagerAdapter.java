@@ -16,7 +16,14 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        return ListMusicFragment.newInstance(position);
+        if(position==0){
+            return ListMusicFragment.newInstance();
+        }else if (position==1){
+
+        }else if (position==2){
+
+        }
+        return null;
     }
 
     @Override

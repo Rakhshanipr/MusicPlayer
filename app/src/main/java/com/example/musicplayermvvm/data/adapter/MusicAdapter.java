@@ -1,9 +1,6 @@
 package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -20,8 +17,8 @@ import com.example.musicplayermvvm.veiwmodel.MusicInfoListViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewListMusicAdapter
-        extends RecyclerView.Adapter<RecyclerViewListMusicAdapter.MusicHolder> {
+public class MusicAdapter
+        extends RecyclerView.Adapter<MusicAdapter.MusicHolder> {
 
     Context mContext;
 
@@ -29,7 +26,7 @@ public class RecyclerViewListMusicAdapter
 
     SetMusicCover mSetMusicCover;
 
-    public RecyclerViewListMusicAdapter(Context context,SetMusicCover musicCover) {
+    public MusicAdapter(Context context, SetMusicCover musicCover) {
         mContext = context;
         mMusicList = new ArrayList<>();
         mSetMusicCover=musicCover;
@@ -51,7 +48,7 @@ public class RecyclerViewListMusicAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewListMusicAdapter.MusicHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MusicAdapter.MusicHolder holder, int position) {
         holder.bind(mMusicList.get(position));
     }
 
@@ -78,10 +75,9 @@ public class RecyclerViewListMusicAdapter
             mMusic = music;
 
             mMusicInfoListBinding.getInfoViewModel().setMusic(music);
-
+            mMusicInfoListBinding.imageView.setImageBitmap(null);
             mSetMusicCover.queueImageCover(music.getFilePath()
                     ,mMusicInfoListBinding.imageView);
-
         }
     }
 }

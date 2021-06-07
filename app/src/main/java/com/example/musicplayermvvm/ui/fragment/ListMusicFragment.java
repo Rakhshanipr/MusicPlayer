@@ -33,11 +33,9 @@ public class ListMusicFragment extends Fragment {
 
     }
 
-    public static ListMusicFragment newInstance(int state) {
+    public static ListMusicFragment newInstance() {
         ListMusicFragment fragment = new ListMusicFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARGS_STATE,state);
-        fragment.setArguments(args);
+
         return fragment;
     }
 

@@ -2,19 +2,15 @@ package com.example.musicplayermvvm.veiwmodel;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.lifecycle.ViewModel;
 
-import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
-
-import java.util.Observable;
 
 public class MusicInfoListViewModel extends BaseObservable {
 
     Music mMusic;
 
-    public MusicInfoListViewModel(Music music){
-        mMusic=music;
+    public MusicInfoListViewModel(Music music) {
+        mMusic = music;
     }
 
     public Music getMusic() {
@@ -28,17 +24,17 @@ public class MusicInfoListViewModel extends BaseObservable {
     }
 
     @Bindable
-    public String getTitle(){
+    public String getTitle() {
         return mMusic.getName();
     }
 
     @Bindable
-    public String getTime(){
+    public String getTime() {
         return mMusic.getDuration();
     }
 
     @Bindable
-    public String getSigner(){
+    public String getSigner() {
         return mMusic.getArtist();
     }
 }

@@ -6,10 +6,13 @@ import android.provider.MediaStore;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ListResourceBundle;
 
 public class MusicRepository {
 
@@ -77,5 +80,30 @@ public class MusicRepository {
             songsCursor.moveToNext();
         }
         mListMutableLiveData.setValue(mMusicList);
+    }
+
+
+    public List<Artist> getArtists(){
+
+        if (mMusicList==null || mMusicList.size()==0){
+            return null;
+        }
+
+        HashMap<String, Artist> hashMap=new HashMap<>();
+
+        for (Music music:mMusicList) {
+
+            if (hashMap.containsKey(music.getArtist())){
+                hashMap.get(music.getArtist()).addMusic(music);
+
+            }else{
+                Artist artist=new Artist(music.getArtist());
+                artist.addMusic(music);
+                hashMap.put(music.getArtist(),artist);
+            }
+
+        }
+
+        return getArtists();
     }
 }

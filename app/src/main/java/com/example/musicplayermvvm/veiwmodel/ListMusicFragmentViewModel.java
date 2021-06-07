@@ -8,11 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.musicplayermvvm.data.adapter.RecyclerViewListMusicAdapter;
+import com.example.musicplayermvvm.data.adapter.MusicAdapter;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.thread.SetMusicCover;
-import com.example.musicplayermvvm.ui.fragment.ListMusicFragment;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
     Context mContext;
 
-    RecyclerViewListMusicAdapter mMusicAdapter;
+    MusicAdapter mMusicAdapter;
 
     public ListMusicFragmentViewModel() {
     }
@@ -34,27 +33,27 @@ public class ListMusicFragmentViewModel extends ViewModel {
     public void setContext(Context context) {
 
         mContext = context;
-        mMusicRepository=MusicRepository.getInstance(mContext);
+        mMusicRepository = MusicRepository.getInstance(mContext);
 
-        mSetMusicCover=new SetMusicCover();
+        mSetMusicCover = new SetMusicCover();
 
-        mListMutableLiveData=mMusicRepository.getListMutableLiveData();
+        mListMutableLiveData = mMusicRepository.getListMutableLiveData();
 
     }
 
-    public RecyclerViewListMusicAdapter createAdapterRecyclerView(Handler handler){
+    public MusicAdapter createAdapterRecyclerView(Handler handler) {
 
-        mMusicAdapter=new RecyclerViewListMusicAdapter(mContext,getSetMusicCover(handler));
+        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
 
         mListMutableLiveData.observe((LifecycleOwner) mContext
                 , new Observer<List<Music>>() {
 
-            @Override
-            public void onChanged(List<Music> music) {
-                mMusicAdapter.setMusicList(music);
-                mMusicAdapter.notifyDataSetChanged();
-            }
-        });
+                    @Override
+                    public void onChanged(List<Music> music) {
+                        mMusicAdapter.setMusicList(music);
+                        mMusicAdapter.notifyDataSetChanged();
+                    }
+                });
 
         mMusicRepository.setMusicList();
 
@@ -71,7 +70,7 @@ public class ListMusicFragmentViewModel extends ViewModel {
         return mSetMusicCover;
     }
 
-    public void fetchMusicList(){
+    public void fetchMusicList() {
 
     }
 }
