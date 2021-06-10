@@ -12,7 +12,6 @@ import com.example.musicplayermvvm.data.model.Music;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListResourceBundle;
 
 public class MusicRepository {
 
@@ -31,15 +30,22 @@ public class MusicRepository {
     Context mContext;
     private List<Music> mMusicList;
 
-    private MutableLiveData<List<Music>> mListMutableLiveData=new MutableLiveData<>();
+    private MutableLiveData<List<Music>> mListMutableLiveDataMusic =new MutableLiveData<>();
+    private MutableLiveData<List<Artist>> mListMutableLiveDataArtist =new MutableLiveData<>();
+
+
 
     private MusicRepository(Context context){
         mContext=context;
         mMusicList =new ArrayList<>();
     }
 
-    public MutableLiveData<List<Music>> getListMutableLiveData() {
-        return mListMutableLiveData;
+    public MutableLiveData<List<Music>> getListMutableLiveDataMusic() {
+        return mListMutableLiveDataMusic;
+    }
+
+    public MutableLiveData<List<Artist>> getListMutableLiveDataArtist() {
+        return mListMutableLiveDataArtist;
     }
 
     public void setMusicList(){
@@ -79,16 +85,16 @@ public class MusicRepository {
             mMusicList.add(music);
             songsCursor.moveToNext();
         }
-        mListMutableLiveData.setValue(mMusicList);
+        mListMutableLiveDataMusic.setValue(mMusicList);
     }
 
 
-    public List<Artist> getArtists(){
+    public void setArtistList(){
 
         if (mMusicList==null || mMusicList.size()==0){
-            return null;
+            return ;
         }
-
+        List<Artist> artistList=new ArrayList<>();
         HashMap<String, Artist> hashMap=new HashMap<>();
 
         for (Music music:mMusicList) {
@@ -99,11 +105,11 @@ public class MusicRepository {
             }else{
                 Artist artist=new Artist(music.getArtist());
                 artist.addMusic(music);
+                artistList.add(artist);
                 hashMap.put(music.getArtist(),artist);
             }
 
         }
-
-        return getArtists();
+        mListMutableLiveDataArtist.setValue(artistList);
     }
 }

@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.musicplayermvvm.data.adapter.ArtistAdapter;
 import com.example.musicplayermvvm.data.adapter.MusicAdapter;
+import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.thread.SetMusicCover;
@@ -21,7 +23,9 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
     SetMusicCover mSetMusicCover;
 
-    MutableLiveData<List<Music>> mListMutableLiveData;
+    MutableLiveData<List<Music>> mListMusicMutable;
+
+    MutableLiveData<List<Artist>> mListArtistMutable;
 
     Context mContext;
 
@@ -30,6 +34,7 @@ public class ListMusicFragmentViewModel extends ViewModel {
     public ListMusicFragmentViewModel() {
     }
 
+
     public void setContext(Context context) {
 
         mContext = context;
@@ -37,15 +42,17 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
         mSetMusicCover = new SetMusicCover();
 
-        mListMutableLiveData = mMusicRepository.getListMutableLiveData();
+        mListMusicMutable = mMusicRepository.getListMutableLiveDataMusic();
+
+        mListArtistMutable = mMusicRepository.getListMutableLiveDataArtist();
 
     }
 
-    public MusicAdapter createAdapterRecyclerView(Handler handler) {
+    public MusicAdapter createAdapterMusic(Handler handler) {
 
         mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
 
-        mListMutableLiveData.observe((LifecycleOwner) mContext
+        mListMusicMutable.observe((LifecycleOwner) mContext
                 , new Observer<List<Music>>() {
 
                     @Override
@@ -58,6 +65,25 @@ public class ListMusicFragmentViewModel extends ViewModel {
         mMusicRepository.setMusicList();
 
         return mMusicAdapter;
+    }
+
+    public ArtistAdapter createAdapterArtist(Handler handler,Context context) {
+
+        ArtistAdapter mArtistAdapter = new ArtistAdapter(getSetMusicCover(handler)
+                , context);
+
+        mListArtistMutable.observe((LifecycleOwner) mContext
+                , new Observer<List<Artist>>() {
+
+                    @Override
+                    public void onChanged(List<Artist> artists) {
+                        mArtistAdapter.setArtists(artists);
+                        mArtistAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        mMusicRepository.setArtistList();
+        return mArtistAdapter;
     }
 
     public SetMusicCover getSetMusicCover(Handler handler) {

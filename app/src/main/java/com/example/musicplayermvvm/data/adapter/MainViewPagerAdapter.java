@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.musicplayermvvm.ui.fragment.ListArtistFragment;
 import com.example.musicplayermvvm.ui.fragment.ListMusicFragment;
 
 public class MainViewPagerAdapter extends FragmentStateAdapter {
@@ -19,7 +20,7 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
         if(position==0){
             return ListMusicFragment.newInstance();
         }else if (position==1){
-
+            return ListArtistFragment.newInstance();
         }else if (position==2){
 
         }

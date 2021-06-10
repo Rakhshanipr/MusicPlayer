@@ -1,5 +1,6 @@
 package com.example.musicplayermvvm.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Artist {
@@ -9,6 +10,7 @@ public class Artist {
 
     public Artist(String name) {
         mName = name;
+        mMusicList=new ArrayList<>();
     }
 
     public Artist(String name, List<Music> musicList) {

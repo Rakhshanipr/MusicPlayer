@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.databinding.FragmentListMusicBinding;
 import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
-import com.example.musicplayermvvm.veiwmodel.MusicInfoListViewModel;
 
 public class ListMusicFragment extends Fragment {
 
@@ -66,7 +65,7 @@ public class ListMusicFragment extends Fragment {
                 LinearLayoutManager(getContext()));
 
         mListMusicBinding.recyclerViewList.setAdapter(
-                mMusicFragmentViewModel.createAdapterRecyclerView(new Handler()));
+                mMusicFragmentViewModel.createAdapterMusic(new Handler()));
 
     }
 }
