@@ -1,6 +1,9 @@
 package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -29,7 +32,7 @@ public class MusicAdapter
     public MusicAdapter(Context context, SetMusicCover musicCover) {
         mContext = context;
         mMusicList = new ArrayList<>();
-        mSetMusicCover=musicCover;
+        mSetMusicCover = musicCover;
     }
 
     public void setMusicList(List<Music> musicList) {
@@ -70,14 +73,17 @@ public class MusicAdapter
             );
 
         }
+
         void bind(Music music) {
 
             mMusic = music;
 
+//            mMusicInfoListBinding.setInfoViewModel(new MusicInfoListViewModel(music));
             mMusicInfoListBinding.getInfoViewModel().setMusic(music);
+
             mMusicInfoListBinding.imageView.setImageBitmap(null);
             mSetMusicCover.queueImageCover(music.getFilePath()
-                    ,mMusicInfoListBinding.imageView);
+                 ,mMusicInfoListBinding.imageView);
         }
     }
 }

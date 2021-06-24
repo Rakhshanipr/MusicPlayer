@@ -51,6 +51,7 @@ public class ListMusicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mListMusicBinding= DataBindingUtil.inflate(inflater
                 ,R.layout.fragment_list_music,container,false);
 
@@ -66,6 +67,5 @@ public class ListMusicFragment extends Fragment {
 
         mListMusicBinding.recyclerViewList.setAdapter(
                 mMusicFragmentViewModel.createAdapterMusic(new Handler()));
-
     }
 }

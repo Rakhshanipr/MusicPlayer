@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
 
@@ -50,42 +51,45 @@ public class MusicRepository {
 
     public void setMusicList(){
 
-        String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+        if(MainViewPagerAdapter.sFragment_state==0){
+            String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
-        String[] projection={
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.ALBUM,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.DATA
+            String[] projection={
+                    MediaStore.Audio.Media.TITLE,
+                    MediaStore.Audio.Media.ARTIST,
+                    MediaStore.Audio.Media.ALBUM,
+                    MediaStore.Audio.Media.DURATION,
+                    MediaStore.Audio.Media.DATA
 
-        };
+            };
 
+            Cursor songsCursor=mContext.getApplicationContext().getContentResolver().query(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    projection,
+                    selection,
+                    null,
+                    null);
 
-        Cursor songsCursor=mContext.getApplicationContext().getContentResolver().query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                projection,
-                null,
-                null,
-                null);
+            songsCursor.moveToFirst();
+            int h=songsCursor.getCount();
+            while (!songsCursor.isAfterLast()){
 
-        songsCursor.moveToFirst();
-        int h=songsCursor.getCount();
-        while (!songsCursor.isAfterLast()){
+                //region get music info from cursor
+                String title=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                String artist=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+                String album=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+                String duration=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+                String data=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                //endregion
 
-            //region get music info from cursor
-            String title=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-            String artist=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-            String album=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-            String duration=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
-            String data=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-            //endregion
-
-            Music music=new Music(title,artist,album,duration,data);
-            mMusicList.add(music);
-            songsCursor.moveToNext();
+                Music music=new Music(title,artist,album,duration,data);
+                mMusicList.add(music);
+                songsCursor.moveToNext();
+            }
+            mListMutableLiveDataMusic.setValue(mMusicList);
+        }else{
+            mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicList);
         }
-        mListMutableLiveDataMusic.setValue(mMusicList);
     }
 
 

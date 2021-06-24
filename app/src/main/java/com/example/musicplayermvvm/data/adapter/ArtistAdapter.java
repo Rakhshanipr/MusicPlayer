@@ -2,10 +2,14 @@ package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayermvvm.R;
@@ -25,10 +29,12 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
 
     List<Artist> mArtists;
 
+
     public ArtistAdapter(SetMusicCover setMusicCover, Context context) {
         mSetMusicCover = setMusicCover;
         mContext = context;
         mArtists = new ArrayList<>();
+
     }
 
     public void setArtists(List<Artist> artists) {
@@ -41,8 +47,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
 
         ArtistInfoListBinding artistInfoListBinding= DataBindingUtil.inflate(inflater
                 ,R.layout.artist_info_list,parent,false);
-
-
 
         return new ArtistHolder(artistInfoListBinding);
     }
@@ -64,7 +68,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
         public ArtistHolder(ArtistInfoListBinding artistInfoListBinding) {
             super(artistInfoListBinding.getRoot());
             mListBinding=artistInfoListBinding;
-            artistInfoListBinding.setInfoViewModel(new ArtistInfoViewModel(null));
+            artistInfoListBinding.setInfoViewModel(new
+                    ArtistInfoViewModel(null,mContext));
         }
 
         public void bind(Artist artist){
@@ -74,10 +79,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
             mListBinding.imageViewArtist.setImageBitmap(null);
 
             mSetMusicCover.queueImageCover(artist.getMusicList().get(0).getFilePath()
-            ,mListBinding.imageViewArtist);
+                    ,mListBinding.imageViewArtist);
 
 
         }
-
     }
 }

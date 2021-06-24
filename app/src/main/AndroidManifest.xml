@@ -3,19 +3,16 @@
     package="com.example.musicplayermvvm">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!--    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />-->
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-
-<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
     <application
         android:allowBackup="true"
-        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayerMVVM">
+        <activity android:name=".ui.activity.SelectedMusicActivity"></activity>
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

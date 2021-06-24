@@ -12,8 +12,10 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()-> Info_ViewModel.onClickLayout()}"
         android:background="#E4B9B9">
 
         <ImageView

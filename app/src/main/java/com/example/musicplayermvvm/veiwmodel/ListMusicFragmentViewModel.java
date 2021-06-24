@@ -3,12 +3,15 @@ package com.example.musicplayermvvm.veiwmodel;
 import android.content.Context;
 import android.os.Handler;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.musicplayermvvm.data.adapter.ArtistAdapter;
+import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.adapter.MusicAdapter;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
@@ -19,6 +22,7 @@ import java.util.List;
 
 public class ListMusicFragmentViewModel extends ViewModel {
 
+    //region defind variable
     MusicRepository mMusicRepository;
 
     SetMusicCover mSetMusicCover;
@@ -30,10 +34,10 @@ public class ListMusicFragmentViewModel extends ViewModel {
     Context mContext;
 
     MusicAdapter mMusicAdapter;
+    //endregion
 
     public ListMusicFragmentViewModel() {
     }
-
 
     public void setContext(Context context) {
 
@@ -52,22 +56,31 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
         mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
 
-        mListMusicMutable.observe((LifecycleOwner) mContext
-                , new Observer<List<Music>>() {
+            mListMusicMutable.observe((LifecycleOwner) mContext
+                    , new Observer<List<Music>>() {
+                        @Override
+                        public void onChanged(List<Music> music) {
+                            mMusicAdapter.setMusicList(music);
+                            mMusicAdapter.notifyDataSetChanged();
+                        }
+                    });
 
-                    @Override
-                    public void onChanged(List<Music> music) {
-                        mMusicAdapter.setMusicList(music);
-                        mMusicAdapter.notifyDataSetChanged();
-                    }
-                });
-
-        mMusicRepository.setMusicList();
+            mMusicRepository.setMusicList();
 
         return mMusicAdapter;
     }
 
-    public ArtistAdapter createAdapterArtist(Handler handler,Context context) {
+    public MusicAdapter createAdapterMusic(Handler handler,List<Music> list) {
+
+        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
+
+        mMusicAdapter.setMusicList(list);
+        mMusicAdapter.notifyDataSetChanged();
+
+        return mMusicAdapter;
+    }
+
+    public ArtistAdapter createAdapterArtist(Handler handler, Context context) {
 
         ArtistAdapter mArtistAdapter = new ArtistAdapter(getSetMusicCover(handler)
                 , context);
@@ -96,7 +109,4 @@ public class ListMusicFragmentViewModel extends ViewModel {
         return mSetMusicCover;
     }
 
-    public void fetchMusicList() {
-
-    }
 }

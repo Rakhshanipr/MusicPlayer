@@ -17,10 +17,9 @@ public class MusicInfoListViewModel extends BaseObservable {
         return mMusic;
     }
 
-
     public void setMusic(Music music) {
         mMusic = music;
-        notifyPropertyChanged(4);
+        notifyPropertyChanged(7);
     }
 
     @Bindable
