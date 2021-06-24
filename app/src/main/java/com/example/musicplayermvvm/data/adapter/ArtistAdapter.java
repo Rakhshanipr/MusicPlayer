@@ -74,7 +74,10 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
 
         public void bind(Artist artist){
 
-            mListBinding.getInfoViewModel().setArtist(artist);
+            mListBinding.setInfoViewModel(new ArtistInfoViewModel(artist,mContext));
+
+            //TODO how not change this code observe for change data
+//            mListBinding.getInfoViewModel().setArtist(artist);
 
             mListBinding.imageViewArtist.setImageBitmap(null);
 

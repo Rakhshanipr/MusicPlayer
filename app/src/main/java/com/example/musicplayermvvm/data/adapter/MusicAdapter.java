@@ -1,9 +1,6 @@
 package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,7 +12,7 @@ import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.MusicInfoListBinding;
 import com.example.musicplayermvvm.thread.SetMusicCover;
-import com.example.musicplayermvvm.veiwmodel.MusicInfoListViewModel;
+import com.example.musicplayermvvm.veiwmodel.InfoMusicViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +66,7 @@ public class MusicAdapter
             super(musicInfoListBinding.getRoot());
             mMusicInfoListBinding = musicInfoListBinding;
             mMusicInfoListBinding.setInfoViewModel(
-                    new MusicInfoListViewModel(null)
+                    new InfoMusicViewModel(null)
             );
 
         }
@@ -78,8 +75,10 @@ public class MusicAdapter
 
             mMusic = music;
 
-//            mMusicInfoListBinding.setInfoViewModel(new MusicInfoListViewModel(music));
-            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
+            mMusicInfoListBinding.setInfoViewModel(new InfoMusicViewModel(music));
+
+            //TODO how not change this code observe for change data
+//            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
 
             mMusicInfoListBinding.imageView.setImageBitmap(null);
             mSetMusicCover.queueImageCover(music.getFilePath()

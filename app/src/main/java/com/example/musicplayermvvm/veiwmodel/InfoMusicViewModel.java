@@ -2,14 +2,15 @@ package com.example.musicplayermvvm.veiwmodel;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.lifecycle.ViewModel;
 
 import com.example.musicplayermvvm.data.model.Music;
 
-public class MusicInfoListViewModel extends BaseObservable {
+public class InfoMusicViewModel extends BaseObservable {
 
     Music mMusic;
 
-    public MusicInfoListViewModel(Music music) {
+    public InfoMusicViewModel(Music music) {
         mMusic = music;
     }
 
@@ -19,7 +20,7 @@ public class MusicInfoListViewModel extends BaseObservable {
 
     public void setMusic(Music music) {
         mMusic = music;
-        notifyPropertyChanged(7);
+        notifyPropertyChanged(4);
     }
 
     @Bindable
