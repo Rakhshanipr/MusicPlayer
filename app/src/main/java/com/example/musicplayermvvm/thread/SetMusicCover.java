@@ -47,7 +47,6 @@ public class SetMusicCover extends HandlerThread {
 
                     MediaMetadataRetriever mMediaMetadataRetriever = new MediaMetadataRetriever();
 
-
                     mMediaMetadataRetriever.setDataSource(path);
 
                     final byte[] mPic = mMediaMetadataRetriever.getEmbeddedPicture();
@@ -63,7 +62,6 @@ public class SetMusicCover extends HandlerThread {
                                 mHashMap.get(path).setImageBitmap(songImage);
                             }
                         });
-
                     }
                     else{
                         mHandlerSetPhoto.post(new Runnable() {
@@ -81,8 +79,6 @@ public class SetMusicCover extends HandlerThread {
     }
 
     public void queueImageCover(String filePath, ImageView imageView){
-
-
         mHashMap.put(filePath,imageView);
 
         mRequstHandler.obtainMessage(WHAT,filePath).sendToTarget();

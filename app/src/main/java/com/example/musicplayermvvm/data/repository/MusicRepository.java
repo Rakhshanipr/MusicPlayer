@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
+import com.example.musicplayermvvm.data.model.Album;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
 
@@ -20,25 +21,26 @@ public class MusicRepository {
 
     private static MusicRepository sMusicRepository;
 
-    public static MusicRepository getInstance(Context context){
-        if (sMusicRepository==null)
-            sMusicRepository=new MusicRepository(context);
+    public static MusicRepository getInstance(Context context) {
+        if (sMusicRepository == null)
+            sMusicRepository = new MusicRepository(context);
         return sMusicRepository;
     }
 
     //endregion
 
+    //region defind variable
     Context mContext;
     private List<Music> mMusicList;
 
-    private MutableLiveData<List<Music>> mListMutableLiveDataMusic =new MutableLiveData<>();
-    private MutableLiveData<List<Artist>> mListMutableLiveDataArtist =new MutableLiveData<>();
+    private MutableLiveData<List<Music>> mListMutableLiveDataMusic = new MutableLiveData<>();
+    private MutableLiveData<List<Artist>> mListMutableLiveDataArtist = new MutableLiveData<>();
+    private MutableLiveData<List<Album>> mListMutableLiveDataAlbum = new MutableLiveData<>();
+    //endregion
 
-
-
-    private MusicRepository(Context context){
-        mContext=context;
-        mMusicList =new ArrayList<>();
+    private MusicRepository(Context context) {
+        mContext = context;
+        mMusicList = new ArrayList<>();
     }
 
     public MutableLiveData<List<Music>> getListMutableLiveDataMusic() {
@@ -49,12 +51,17 @@ public class MusicRepository {
         return mListMutableLiveDataArtist;
     }
 
-    public void setMusicList(){
 
-        if(MainViewPagerAdapter.sFragment_state==0){
+    public MutableLiveData<List<Album>> getListMutableLiveDataAlbum() {
+        return mListMutableLiveDataAlbum;
+    }
+
+    public void setMusicList() {
+
+        if (MainViewPagerAdapter.sFragment_state == 0) {
             String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
-            String[] projection={
+            String[] projection = {
                     MediaStore.Audio.Media.TITLE,
                     MediaStore.Audio.Media.ARTIST,
                     MediaStore.Audio.Media.ALBUM,
@@ -63,7 +70,7 @@ public class MusicRepository {
 
             };
 
-            Cursor songsCursor=mContext.getApplicationContext().getContentResolver().query(
+            Cursor songsCursor = mContext.getApplicationContext().getContentResolver().query(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                     projection,
                     selection,
@@ -71,49 +78,74 @@ public class MusicRepository {
                     null);
 
             songsCursor.moveToFirst();
-            int h=songsCursor.getCount();
-            while (!songsCursor.isAfterLast()){
+            int h = songsCursor.getCount();
+            while (!songsCursor.isAfterLast()) {
 
                 //region get music info from cursor
-                String title=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-                String artist=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-                String album=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-                String duration=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
-                String data=songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                String title = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                String artist = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+                String album = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+                String duration = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+                String data = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 //endregion
 
-                Music music=new Music(title,artist,album,duration,data);
+                Music music = new Music(title, artist, album, duration, data);
                 mMusicList.add(music);
                 songsCursor.moveToNext();
             }
             mListMutableLiveDataMusic.setValue(mMusicList);
-        }else{
+        } else {
             mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicList);
         }
+
     }
 
+    public void setArtistList() {
 
-    public void setArtistList(){
-
-        if (mMusicList==null || mMusicList.size()==0){
-            return ;
+        if (mMusicList == null || mMusicList.size() == 0) {
+            return;
         }
-        List<Artist> artistList=new ArrayList<>();
-        HashMap<String, Artist> hashMap=new HashMap<>();
+        List<Artist> artistList = new ArrayList<>();
+        HashMap<String, Artist> hashMap = new HashMap<>();
 
-        for (Music music:mMusicList) {
+        for (Music music : mMusicList) {
 
-            if (hashMap.containsKey(music.getArtist())){
+            if (hashMap.containsKey(music.getArtist())) {
                 hashMap.get(music.getArtist()).addMusic(music);
 
-            }else{
-                Artist artist=new Artist(music.getArtist());
+            } else {
+                Artist artist = new Artist(music.getArtist());
                 artist.addMusic(music);
                 artistList.add(artist);
-                hashMap.put(music.getArtist(),artist);
+                hashMap.put(music.getArtist(), artist);
             }
 
         }
         mListMutableLiveDataArtist.setValue(artistList);
     }
+
+    public void setAlbumList() {
+
+        if (mMusicList == null || mMusicList.size() == 0) {
+            return;
+        }
+        List<Album> albumList = new ArrayList<>();
+        HashMap<String, Album> hashMap = new HashMap<>();
+
+        for (Music music : mMusicList) {
+
+            if (hashMap.containsKey(music.getAlbum())) {
+                hashMap.get(music.getAlbum()).addMusic(music);
+
+            } else {
+                Album album = new Album(music.getArtist());
+                album.addMusic(music);
+                albumList.add(album);
+                hashMap.put(music.getArtist(), album);
+            }
+        }
+
+        mListMutableLiveDataAlbum.setValue(albumList);
+    }
+
 }

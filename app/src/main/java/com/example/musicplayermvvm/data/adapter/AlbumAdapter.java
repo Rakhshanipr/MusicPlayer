@@ -2,17 +2,14 @@ package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayermvvm.R;
+import com.example.musicplayermvvm.data.model.Album;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.databinding.ArtistInfoListBinding;
 import com.example.musicplayermvvm.thread.SetMusicCover;
@@ -21,22 +18,22 @@ import com.example.musicplayermvvm.veiwmodel.ArtistInfoViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ArtistHolder> {
 
     SetMusicCover mSetMusicCover;
 
     Context mContext;
 
-    List<Artist> mArtists;
+    List<Album> mAlbums;
 
-    public ArtistAdapter(SetMusicCover setMusicCover, Context context) {
+    public AlbumAdapter(SetMusicCover setMusicCover, Context context) {
         mSetMusicCover = setMusicCover;
         mContext = context;
-        mArtists = new ArrayList<>();
+        mAlbums = new ArrayList<>();
     }
 
-    public void setArtists(List<Artist> artists) {
-        mArtists = artists;
+    public void setAlbums(List<Album> albums) {
+        mAlbums = albums;
     }
 
     @Override
@@ -50,13 +47,13 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArtistAdapter.ArtistHolder holder, int position) {
-        holder.bind(mArtists.get(position));
+    public void onBindViewHolder(@NonNull AlbumAdapter.ArtistHolder holder, int position) {
+        holder.bind(mAlbums.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mArtists.size();
+        return mAlbums.size();
     }
 
     class ArtistHolder extends RecyclerView.ViewHolder{
@@ -70,8 +67,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
                     ArtistInfoViewModel(null,mContext));
         }
 
-        public void bind(Artist artist){
+        public void bind(Album album){
 
+            Artist artist=new Artist(album.getName(),album.getMusicList());
             mListBinding.setInfoViewModel(new ArtistInfoViewModel(artist,mContext));
 
             //TODO how not change this code observe for change data
@@ -81,8 +79,6 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
 
             mSetMusicCover.queueImageCover(artist.getMusicList().get(0).getFilePath()
                     ,mListBinding.imageViewArtist);
-
-
         }
     }
 }

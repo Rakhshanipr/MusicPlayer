@@ -12,51 +12,49 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.musicplayermvvm.R;
-import com.example.musicplayermvvm.databinding.FragmentListArtistBinding;
+import com.example.musicplayermvvm.databinding.FragmentListAlbumBinding;
 import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
 
-public class ListArtistFragment extends Fragment {
+public class ListAlbumFragment extends Fragment {
 
-    //region defind static method and variable
-    public static ListArtistFragment newInstance() {
-        ListArtistFragment fragment = new ListArtistFragment();
-        return fragment;
-    }
-    //endregion
 
-    //region defind variable
-    FragmentListArtistBinding mListBinding;
+    FragmentListAlbumBinding mListBinding;
 
     ListMusicFragmentViewModel mMusicFragmentViewModel;
-    //endregion
+
+    public static ListAlbumFragment newInstance() {
+        ListAlbumFragment fragment = new ListAlbumFragment();
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMusicFragmentViewModel=new ListMusicFragmentViewModel();
         mMusicFragmentViewModel.setContext_MusicCover(getContext());
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mListBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_list_artist
+        mListBinding= DataBindingUtil.inflate(inflater,R.layout.fragment_list_album
                 ,container,false);
 
         initial();
 
 
+
         return mListBinding.getRoot();
     }
 
+
     private void initial() {
 
-        mListBinding.recyclerViewListArtist.setLayoutManager(new GridLayoutManager(getContext(),1));
+        mListBinding.recyclerViewListAlbum.setLayoutManager(new GridLayoutManager(getContext(),1));
 
-        mListBinding.recyclerViewListArtist.setAdapter(
-                mMusicFragmentViewModel.createAdapterArtist(new Handler(),
+        mListBinding.recyclerViewListAlbum.setAdapter(
+                mMusicFragmentViewModel.createAdapterAlbum(new Handler(),
                         getContext()));
     }
 }

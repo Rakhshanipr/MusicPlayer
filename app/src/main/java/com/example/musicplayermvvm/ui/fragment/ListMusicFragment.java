@@ -44,7 +44,7 @@ public class ListMusicFragment extends Fragment {
 
         mMusicFragmentViewModel=new
                 ViewModelProvider(requireActivity()).get(ListMusicFragmentViewModel.class);
-        mMusicFragmentViewModel.setContext(getContext());
+        mMusicFragmentViewModel.setContext_MusicCover(getContext());
 
     }
 

@@ -10,9 +10,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.musicplayermvvm.data.adapter.AlbumAdapter;
 import com.example.musicplayermvvm.data.adapter.ArtistAdapter;
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.adapter.MusicAdapter;
+import com.example.musicplayermvvm.data.model.Album;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
@@ -31,6 +33,9 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
     MutableLiveData<List<Artist>> mListArtistMutable;
 
+    MutableLiveData<List<Album>> mListAlbumtMutable;
+
+
     Context mContext;
 
     MusicAdapter mMusicAdapter;
@@ -39,7 +44,7 @@ public class ListMusicFragmentViewModel extends ViewModel {
     public ListMusicFragmentViewModel() {
     }
 
-    public void setContext(Context context) {
+    public void setContext_MusicCover(Context context) {
 
         mContext = context;
         mMusicRepository = MusicRepository.getInstance(mContext);
@@ -50,6 +55,7 @@ public class ListMusicFragmentViewModel extends ViewModel {
 
         mListArtistMutable = mMusicRepository.getListMutableLiveDataArtist();
 
+        mListAlbumtMutable = mMusicRepository.getListMutableLiveDataAlbum();
     }
 
     public MusicAdapter createAdapterMusic(Handler handler) {
@@ -70,16 +76,6 @@ public class ListMusicFragmentViewModel extends ViewModel {
         return mMusicAdapter;
     }
 
-    public MusicAdapter createAdapterMusic(Handler handler,List<Music> list) {
-
-        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
-
-        mMusicAdapter.setMusicList(list);
-        mMusicAdapter.notifyDataSetChanged();
-
-        return mMusicAdapter;
-    }
-
     public ArtistAdapter createAdapterArtist(Handler handler, Context context) {
 
         ArtistAdapter mArtistAdapter = new ArtistAdapter(getSetMusicCover(handler)
@@ -96,6 +92,25 @@ public class ListMusicFragmentViewModel extends ViewModel {
                 });
 
         mMusicRepository.setArtistList();
+        return mArtistAdapter;
+    }
+
+    public AlbumAdapter createAdapterAlbum(Handler handler, Context context) {
+
+        AlbumAdapter mArtistAdapter = new AlbumAdapter(getSetMusicCover(handler)
+                , context);
+
+        mListAlbumtMutable.observe((LifecycleOwner) mContext
+                , new Observer<List<Album>>() {
+
+                    @Override
+                    public void onChanged(List<Album> albums) {
+                        mArtistAdapter.setAlbums(albums);
+                        mArtistAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        mMusicRepository.setAlbumList();
         return mArtistAdapter;
     }
 
