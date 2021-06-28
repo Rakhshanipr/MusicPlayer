@@ -7,6 +7,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.musicplayermvvm.R;
@@ -14,6 +16,7 @@ import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.databinding.ActivityMainBinding;
 import com.example.musicplayermvvm.veiwmodel.MainActivityViewModel;
 
+import java.io.IOException;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mMainBinding.getRoot());
 
         getPermission();
+
 
         Initial();
     }

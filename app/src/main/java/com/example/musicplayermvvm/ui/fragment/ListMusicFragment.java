@@ -1,5 +1,7 @@
 package com.example.musicplayermvvm.ui.fragment;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.databinding.FragmentListMusicBinding;
 import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
+
+import java.io.IOException;
 
 public class ListMusicFragment extends Fragment {
 
@@ -54,6 +58,22 @@ public class ListMusicFragment extends Fragment {
 
         mListMusicBinding= DataBindingUtil.inflate(inflater
                 ,R.layout.fragment_list_music,container,false);
+
+
+        MediaPlayer mediaPlayer=new MediaPlayer();
+
+        try {
+            mediaPlayer.setDataSource(getContext(),
+                    Uri.parse("/storage/emulated/0/Music/Ghasem Soliemani/Hossein Taheri - Donya Shode Amadeye Jang Jahani [SevilMusic].mp3"));
+
+            mediaPlayer.prepare();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mediaPlayer.start();
+
 
         Initial();
 
