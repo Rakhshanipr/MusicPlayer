@@ -1,18 +1,28 @@
 package com.example.musicplayermvvm.veiwmodel;
 
+import android.app.Application;
+import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.musicplayermvvm.data.model.Music;
 
-public class InfoMusicViewModel extends BaseObservable {
+public class InfoMusicViewModel extends AndroidViewModel {
 
     Music mMusic;
 
-    public InfoMusicViewModel(Music music) {
-        mMusic = music;
+    MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
+
+    public InfoMusicViewModel(@NonNull Application application) {
+        super(application);
     }
+
 
     public Music getMusic() {
         return mMusic;
@@ -20,21 +30,31 @@ public class InfoMusicViewModel extends BaseObservable {
 
     public void setMusic(Music music) {
         mMusic = music;
-        notifyPropertyChanged(4);
+        mMusicLiveData.setValue(music);
     }
 
-    @Bindable
+    public MutableLiveData<Music> getMusicLiveData() {
+        return mMusicLiveData;
+    }
+
+    public void setMusicLiveData(MutableLiveData<Music> musicLiveData) {
+        mMusicLiveData = musicLiveData;
+    }
+
     public String getTitle() {
         return mMusic.getName();
     }
 
-    @Bindable
     public String getTime() {
         return mMusic.getDuration();
     }
 
-    @Bindable
     public String getSigner() {
         return mMusic.getArtist();
     }
+
+    public void onClickMusic(){
+        Context context;
+    }
+
 }

@@ -1,10 +1,15 @@
 package com.example.musicplayermvvm.veiwmodel;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -22,7 +27,7 @@ import com.example.musicplayermvvm.thread.SetMusicCover;
 
 import java.util.List;
 
-public class ListMusicFragmentViewModel extends ViewModel {
+public class ListMusicFragmentViewModel extends AndroidViewModel {
 
     //region defind variable
     MusicRepository mMusicRepository;
@@ -39,10 +44,12 @@ public class ListMusicFragmentViewModel extends ViewModel {
     Context mContext;
 
     MusicAdapter mMusicAdapter;
+
+    public ListMusicFragmentViewModel(@NonNull Application application) {
+        super(application);
+    }
     //endregion
 
-    public ListMusicFragmentViewModel() {
-    }
 
     public void setContext_MusicCover(Context context) {
 
@@ -58,9 +65,9 @@ public class ListMusicFragmentViewModel extends ViewModel {
         mListAlbumtMutable = mMusicRepository.getListMutableLiveDataAlbum();
     }
 
-    public MusicAdapter createAdapterMusic(Handler handler) {
+    public MusicAdapter createAdapterMusic(Handler handler, Fragment fragment) {
 
-        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler));
+        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler),fragment);
 
             mListMusicMutable.observe((LifecycleOwner) mContext
                     , new Observer<List<Music>>() {

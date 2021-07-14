@@ -2,21 +2,17 @@ package com.example.musicplayermvvm.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.databinding.ArtistInfoListBinding;
 import com.example.musicplayermvvm.thread.SetMusicCover;
-import com.example.musicplayermvvm.veiwmodel.ArtistInfoViewModel;
+import com.example.musicplayermvvm.veiwmodel.InfoArtistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +63,12 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
             super(artistInfoListBinding.getRoot());
             mListBinding=artistInfoListBinding;
             artistInfoListBinding.setInfoViewModel(new
-                    ArtistInfoViewModel(null,mContext));
+                    InfoArtistViewModel(null,mContext));
         }
 
         public void bind(Artist artist){
 
-            mListBinding.setInfoViewModel(new ArtistInfoViewModel(artist,mContext));
+            mListBinding.setInfoViewModel(new InfoArtistViewModel(artist,mContext));
 
             //TODO how not change this code observe for change data
 //            mListBinding.getInfoViewModel().setArtist(artist);

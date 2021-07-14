@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Handler;
@@ -33,7 +34,7 @@ public class ListArtistFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMusicFragmentViewModel=new ListMusicFragmentViewModel();
+        mMusicFragmentViewModel=new ViewModelProvider(requireActivity()).get(ListMusicFragmentViewModel.class);
         mMusicFragmentViewModel.setContext_MusicCover(getContext());
 
     }
@@ -47,7 +48,6 @@ public class ListArtistFragment extends Fragment {
 
         initial();
 
-
         return mListBinding.getRoot();
     }
 
@@ -59,4 +59,5 @@ public class ListArtistFragment extends Fragment {
                 mMusicFragmentViewModel.createAdapterArtist(new Handler(),
                         getContext()));
     }
+
 }

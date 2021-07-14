@@ -1,11 +1,14 @@
 package com.example.musicplayermvvm.data.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayermvvm.R;
@@ -26,10 +29,13 @@ public class MusicAdapter
 
     SetMusicCover mSetMusicCover;
 
-    public MusicAdapter(Context context, SetMusicCover musicCover) {
+    Fragment mFragment;
+
+    public MusicAdapter(Context context, SetMusicCover musicCover, Fragment fragment) {
         mContext = context;
         mMusicList = new ArrayList<>();
         mSetMusicCover = musicCover;
+        mFragment=fragment;
     }
 
     public void setMusicList(List<Music> musicList) {
@@ -66,8 +72,8 @@ public class MusicAdapter
             super(musicInfoListBinding.getRoot());
             mMusicInfoListBinding = musicInfoListBinding;
             mMusicInfoListBinding.setInfoViewModel(
-                    new InfoMusicViewModel(null)
-            );
+                    null);
+
 
         }
 
@@ -75,10 +81,13 @@ public class MusicAdapter
 
             mMusic = music;
 
-            mMusicInfoListBinding.setInfoViewModel(new InfoMusicViewModel(music));
+            InfoMusicViewModel musicViewModel=new ViewModelProvider(mFragment.requireActivity()).get(InfoMusicViewModel.class);
+            musicViewModel.setMusic(mMusic);
+            mMusicInfoListBinding.setInfoViewModel(musicViewModel);
 
             //TODO how not change this code observe for change data
 //            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
+
 
             mMusicInfoListBinding.imageView.setImageBitmap(null);
             mSetMusicCover.queueImageCover(music.getFilePath()

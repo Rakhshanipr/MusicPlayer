@@ -13,7 +13,7 @@ import com.example.musicplayermvvm.data.model.Album;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.databinding.ArtistInfoListBinding;
 import com.example.musicplayermvvm.thread.SetMusicCover;
-import com.example.musicplayermvvm.veiwmodel.ArtistInfoViewModel;
+import com.example.musicplayermvvm.veiwmodel.InfoArtistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,13 +64,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ArtistHolder
             super(artistInfoListBinding.getRoot());
             mListBinding=artistInfoListBinding;
             artistInfoListBinding.setInfoViewModel(new
-                    ArtistInfoViewModel(null,mContext));
+                    InfoArtistViewModel(null,mContext));
         }
 
         public void bind(Album album){
 
             Artist artist=new Artist(album.getName(),album.getMusicList());
-            mListBinding.setInfoViewModel(new ArtistInfoViewModel(artist,mContext));
+            mListBinding.setInfoViewModel(new InfoArtistViewModel(artist,mContext));
 
             //TODO how not change this code observe for change data
 //            mListBinding.getInfoViewModel().setArtist(artist);

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Handler;
@@ -15,12 +17,13 @@ import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.databinding.FragmentListAlbumBinding;
 import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
 
-public class ListAlbumFragment extends Fragment {
+public class    ListAlbumFragment extends Fragment {
 
-
+    //region defind variable
     FragmentListAlbumBinding mListBinding;
 
     ListMusicFragmentViewModel mMusicFragmentViewModel;
+    //endregion
 
     public static ListAlbumFragment newInstance() {
         ListAlbumFragment fragment = new ListAlbumFragment();
@@ -30,7 +33,7 @@ public class ListAlbumFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMusicFragmentViewModel=new ListMusicFragmentViewModel();
+        mMusicFragmentViewModel= new ViewModelProvider(requireActivity()).get(ListMusicFragmentViewModel.class);
         mMusicFragmentViewModel.setContext_MusicCover(getContext());
     }
 
@@ -43,11 +46,8 @@ public class ListAlbumFragment extends Fragment {
 
         initial();
 
-
-
         return mListBinding.getRoot();
     }
-
 
     private void initial() {
 

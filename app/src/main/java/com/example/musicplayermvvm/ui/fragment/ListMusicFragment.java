@@ -86,6 +86,6 @@ public class ListMusicFragment extends Fragment {
                 LinearLayoutManager(getContext()));
 
         mListMusicBinding.recyclerViewList.setAdapter(
-                mMusicFragmentViewModel.createAdapterMusic(new Handler()));
+                mMusicFragmentViewModel.createAdapterMusic(new Handler(),this));
     }
 }
