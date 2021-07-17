@@ -31,7 +31,10 @@ public class MusicAdapter
 
     Fragment mFragment;
 
-    public MusicAdapter(Context context, SetMusicCover musicCover, Fragment fragment) {
+    Activity mActivity;
+
+    public MusicAdapter(Context context, SetMusicCover musicCover
+            , Fragment fragment) {
         mContext = context;
         mMusicList = new ArrayList<>();
         mSetMusicCover = musicCover;
@@ -81,9 +84,11 @@ public class MusicAdapter
 
             mMusic = music;
 
-            InfoMusicViewModel musicViewModel=new ViewModelProvider(mFragment.requireActivity()).get(InfoMusicViewModel.class);
+            InfoMusicViewModel musicViewModel=new InfoMusicViewModel();
             musicViewModel.setMusic(mMusic);
+            mMusicInfoListBinding.setContext(mContext);
             mMusicInfoListBinding.setInfoViewModel(musicViewModel);
+
 
             //TODO how not change this code observe for change data
 //            mMusicInfoListBinding.getInfoViewModel().setMusic(music);

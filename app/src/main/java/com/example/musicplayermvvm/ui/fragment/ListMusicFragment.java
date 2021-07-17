@@ -59,21 +59,19 @@ public class ListMusicFragment extends Fragment {
         mListMusicBinding= DataBindingUtil.inflate(inflater
                 ,R.layout.fragment_list_music,container,false);
 
-
-        MediaPlayer mediaPlayer=new MediaPlayer();
-
-        try {
-            mediaPlayer.setDataSource(getContext(),
-                    Uri.parse("/storage/emulated/0/Music/Ghasem Soliemani/Hossein Taheri - Donya Shode Amadeye Jang Jahani [SevilMusic].mp3"));
-
-            mediaPlayer.prepare();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mediaPlayer.start();
-
+//        MediaPlayer mediaPlayer=new MediaPlayer();
+//
+//        try {
+//            mediaPlayer.setDataSource(getContext(),
+//                    Uri.parse("/storage/emulated/0/Music/Ghasem Soliemani/Hossein Taheri - Donya Shode Amadeye Jang Jahani [SevilMusic].mp3"));
+//
+//            mediaPlayer.prepare();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        mediaPlayer.start();
 
         Initial();
 

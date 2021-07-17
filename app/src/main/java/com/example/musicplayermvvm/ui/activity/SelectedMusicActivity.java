@@ -1,8 +1,10 @@
 package com.example.musicplayermvvm.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
@@ -28,10 +30,13 @@ public class SelectedMusicActivity extends AppCompatActivity {
 
         mBinding = ActivitySelectedMusicBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_selected_music, ListMusicFragment.newInstance(), TAG_SELCTED_MUSIC_FRAGMENT)
                 .commit();
+        Activity activity=this;
+        AppCompatActivity appCompatActivity=(AppCompatActivity)activity;
+        FragmentManager a=appCompatActivity.getSupportFragmentManager();
+        int af=1;
     }
 
     @Override

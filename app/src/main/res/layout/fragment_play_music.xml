@@ -3,9 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <data>
+        <variable
+            name="PlayMusicViewModel"
+            type="com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
         <SeekBar
             android:id="@+id/seekBar_duration"
@@ -13,17 +26,19 @@
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageButton_minus"
             app:layout_constraintEnd_toStartOf="@+id/textView_duration"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView_played_time"
-            tools:layout_editor_absoluteY="619dp" />
+            app:layout_constraintStart_toEndOf="@+id/textView_played_time" />
 
         <ImageButton
             android:id="@+id/imageButton_play_puase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@android:drawable/ic_media_play"
+            android:onClick="@{()-> PlayMusicViewModel.PlayMuisc()}"
+            android:padding="0dp"
+            android:src="@mipmap/pausemusic"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_next"
             app:layout_constraintTop_toTopOf="@+id/imageButton_next" />
@@ -32,8 +47,8 @@
             android:id="@+id/imageButton_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:src="@android:drawable/ic_media_next"
+            android:onClick="@{()-> PlayMusicViewModel.nextMusic()}"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_round"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_round"
             app:layout_constraintTop_toTopOf="@+id/imageButton_round" />
@@ -42,7 +57,7 @@
             android:id="@+id/imageButton_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:onClick="@{()-> PlayMusicViewModel.prevMusic()}"
             android:src="@android:drawable/ic_media_previous"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_play_puase"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_play_puase"
@@ -52,7 +67,6 @@
             android:id="@+id/imageButton_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:src="@android:drawable/stat_notify_sync_noanim"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_minus"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_minus"
@@ -62,7 +76,6 @@
             android:id="@+id/imageButton_random"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:src="@android:drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_prev"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_prev"
@@ -72,19 +85,17 @@
             android:id="@+id/imageButton_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
             android:src="@android:drawable/radiobutton_on_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar_duration" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
             android:id="@+id/imageButton_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:src="@android:drawable/radiobutton_on_background"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_random"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_random"
@@ -170,6 +181,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView_title_music"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView_title_music" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

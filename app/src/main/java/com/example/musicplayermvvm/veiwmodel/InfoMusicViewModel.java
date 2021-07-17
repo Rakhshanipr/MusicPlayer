@@ -1,28 +1,28 @@
 package com.example.musicplayermvvm.veiwmodel;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
+import com.example.musicplayermvvm.ui.activity.PlayMusicActivity;
 
-public class InfoMusicViewModel extends AndroidViewModel {
+public class InfoMusicViewModel {
 
     Music mMusic;
 
     MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
-
-    public InfoMusicViewModel(@NonNull Application application) {
-        super(application);
-    }
-
 
     public Music getMusic() {
         return mMusic;
@@ -53,8 +53,10 @@ public class InfoMusicViewModel extends AndroidViewModel {
         return mMusic.getArtist();
     }
 
-    public void onClickMusic(){
-        Context context;
-    }
+    public void onClickMusic(Context context) {
 
+        context.startActivity(
+                PlayMusicActivity.newIntent(context,getMusic()));
+
+    }
 }

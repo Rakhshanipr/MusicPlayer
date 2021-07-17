@@ -40,15 +40,14 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Album>> mListAlbumtMutable;
 
-
     Context mContext;
 
     MusicAdapter mMusicAdapter;
 
+    //endregion
     public ListMusicFragmentViewModel(@NonNull Application application) {
         super(application);
     }
-    //endregion
 
 
     public void setContext_MusicCover(Context context) {

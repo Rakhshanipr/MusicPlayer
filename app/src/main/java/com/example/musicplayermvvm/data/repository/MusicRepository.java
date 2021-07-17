@@ -77,8 +77,12 @@ public class MusicRepository {
                     null,
                     null);
 
+            mMusicList=new ArrayList<>();
             songsCursor.moveToFirst();
             int h = songsCursor.getCount();
+
+            Music music1=new Music();
+
             while (!songsCursor.isAfterLast()) {
 
                 //region get music info from cursor
@@ -89,15 +93,35 @@ public class MusicRepository {
                 String data = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 //endregion
 
-                Music music = new Music(title, artist, album, duration, data);
-                mMusicList.add(music);
+                music1 = new Music(title, artist, album, duration, data);
+
+                mMusicList.add(music1);
                 songsCursor.moveToNext();
             }
+
+            for (int i=1;i<mMusicList.size()-1;i++){
+                mMusicList.get(i).setPrev(mMusicList.get(i-1));
+                mMusicList.get(i).setNext(mMusicList.get(i+1));
+            }
+
+            mMusicList.get(0).setPrev(mMusicList.get(mMusicList.size()-1));
+
+            mMusicList.get(mMusicList.size()-1).setNext(mMusicList.get(0));
+
+            if (mMusicList.size()==2){
+                mMusicList.get(0).setNext(mMusicList.get(mMusicList.size()-1));
+
+                mMusicList.get(mMusicList.size()-1).setPrev(mMusicList.get(0));
+            }
+
             mListMutableLiveDataMusic.setValue(mMusicList);
         } else {
             mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicList);
         }
+    }
 
+    public List<Music> getMusicList() {
+        return mMusicList;
     }
 
     public void setArtistList() {
@@ -105,6 +129,7 @@ public class MusicRepository {
         if (mMusicList == null || mMusicList.size() == 0) {
             return;
         }
+
         List<Artist> artistList = new ArrayList<>();
         HashMap<String, Artist> hashMap = new HashMap<>();
 
@@ -119,7 +144,21 @@ public class MusicRepository {
                 artistList.add(artist);
                 hashMap.put(music.getArtist(), artist);
             }
+            for (Artist artist:artistList) {
+                for (int i=1;i<artist.getMusicList().size()-1;i++){
+                    artist.getMusicList().get(i).setPrev( artist.getMusicList().get(i-1));
+                    artist.getMusicList().get(i).setNext( artist.getMusicList().get(i+1));
+                }
 
+                if (artist.getMusicList().size()==2){
+                    artist.getMusicList().get(0).setNext(artist.getMusicList().get(artist.getMusicList().size()-1));
+
+                    artist.getMusicList().get(artist.getMusicList().size()-1).setPrev(artist.getMusicList().get(0));
+                }
+                artist.getMusicList().get(0).setPrev(artist.getMusicList().get(artist.getMusicList().size()-1));
+
+                artist.getMusicList().get(artist.getMusicList().size()-1).setNext(artist.getMusicList().get(0));
+            }
         }
         mListMutableLiveDataArtist.setValue(artistList);
     }

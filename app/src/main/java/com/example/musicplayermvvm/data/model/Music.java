@@ -1,14 +1,34 @@
 package com.example.musicplayermvvm.data.model;
 
-public class Music {
+import java.io.Serializable;
+
+public class Music implements Serializable {
 
     private String mName;
     private String mArtist;
     private String mAlbum;
     private String mDuration;
     private String mFilePath;
+    public Music mPrev=null;
+    public Music mNext=null;
 
     public Music() {
+    }
+
+    public Music getPrev() {
+        return mPrev;
+    }
+
+    public void setPrev(Music prev) {
+        mPrev = prev;
+    }
+
+    public Music getNext() {
+        return mNext;
+    }
+
+    public void setNext(Music next) {
+        mNext = next;
     }
 
     public Music(String name, String artist, String album, String duration, String filePath) {

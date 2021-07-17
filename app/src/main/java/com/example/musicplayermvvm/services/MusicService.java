@@ -7,9 +7,13 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
+import java.io.IOException;
+import java.util.concurrent.Executor;
+
 public class MusicService extends Service {
 
     //region defind static method and variable
+
     public static Intent newIntent(Context context) {
         return new Intent(context, MusicService.class);
     }
@@ -35,7 +39,17 @@ public class MusicService extends Service {
 
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        mMediaPlayer = mediaPlayer;
+        mMediaPlayer=mediaPlayer;
+    }
+
+    public void changeMediaPlayerData(String path) throws IOException {
+        if (getMediaPlayer()==null){
+            mMediaPlayer=new MediaPlayer();
+        }
+        mMediaPlayer.reset();
+        mMediaPlayer.setDataSource(path);
+        mMediaPlayer.prepare();
+        mMediaPlayer.start();
     }
 
     public MediaPlayer getMediaPlayer(){
@@ -44,6 +58,10 @@ public class MusicService extends Service {
 
     public int getCurrentPosition(){
         return mMediaPlayer.getCurrentPosition();
+    }
+
+    public void playNext(){
+
     }
 
     public void playPauseMusic(){
@@ -58,6 +76,4 @@ public class MusicService extends Service {
             return MusicService.this;
         }
     }
-
-
 }

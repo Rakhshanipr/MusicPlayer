@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mMainBinding.getRoot());
         getPermission();
 
-
         Initial();
+
     }
 
     private void Initial() {
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode==REQUEST_CODE_GET_PERMISSION
                 && grantResults[0]==0){
-
         }
     }
 }
