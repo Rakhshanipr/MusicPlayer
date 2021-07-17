@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
         <variable
             name="PlayMusicViewModel"
@@ -13,7 +12,6 @@
             name="context"
             type="android.content.Context" />
     </data>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -107,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Title music name"
             android:textColor="#000000"
+            android:text="@{()-> PlayMusicViewModel.title}"
             app:layout_constraintBottom_toTopOf="@+id/seekBar_duration"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_like"
             app:layout_constraintStart_toEndOf="@+id/imageButton_add_to_list" />
@@ -118,8 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="00:00"
             android:textColor="#000000"
+            android:text="@{()-> PlayMusicViewModel.fullTime}"
+
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -128,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="00:00"
+            android:text="@{()-> PlayMusicViewModel.currentPosition}"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
             app:layout_constraintStart_toStartOf="parent" />

@@ -51,7 +51,6 @@ public class MusicRepository {
         return mListMutableLiveDataArtist;
     }
 
-
     public MutableLiveData<List<Album>> getListMutableLiveDataAlbum() {
         return mListMutableLiveDataAlbum;
     }
@@ -113,7 +112,6 @@ public class MusicRepository {
 
                 mMusicList.get(mMusicList.size()-1).setPrev(mMusicList.get(0));
             }
-
             mListMutableLiveDataMusic.setValue(mMusicList);
         } else {
             mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicList);
@@ -183,8 +181,6 @@ public class MusicRepository {
                 hashMap.put(music.getArtist(), album);
             }
         }
-
         mListMutableLiveDataAlbum.setValue(albumList);
     }
-
 }

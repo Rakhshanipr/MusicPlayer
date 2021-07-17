@@ -60,6 +60,10 @@ public class MusicService extends Service {
         return mMediaPlayer.getCurrentPosition();
     }
 
+    public int getDuration(){
+        return mMediaPlayer.getDuration();
+    }
+
     public void playNext(){
 
     }

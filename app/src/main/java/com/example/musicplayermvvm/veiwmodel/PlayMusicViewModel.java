@@ -92,6 +92,18 @@ public class PlayMusicViewModel extends AndroidViewModel {
         }
     }
 
+    public String getTitle(){
+        return mMusic.getName();
+    }
+
+    public String getFullTime(){
+        return Integer.toString(mMusicService.getDuration());
+    }
+
+    public String getCurrentPosition(){
+        return Integer.toString(mMusicService.getCurrentPosition());
+    }
+
     public void PauseMuisc() {
         mMusicService.playPauseMusic();
         mReactionMusicPlayer.playPauseClicked();
