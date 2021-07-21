@@ -92,7 +92,7 @@ public class MusicRepository {
                 String data = songsCursor.getString(songsCursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 //endregion
 
-                music1 = new Music(title, artist, album, duration, data);
+                music1 = new Music(title, artist, album,Long.parseLong(duration), data);
 
                 mMusicList.add(music1);
                 songsCursor.moveToNext();
@@ -104,8 +104,11 @@ public class MusicRepository {
             }
 
             mMusicList.get(0).setPrev(mMusicList.get(mMusicList.size()-1));
+            mMusicList.get(0).setNext(mMusicList.get(1));
 
             mMusicList.get(mMusicList.size()-1).setNext(mMusicList.get(0));
+            mMusicList.get(mMusicList.size()-1).setPrev(mMusicList.get(mMusicList.size()-2));
+
 
             if (mMusicList.size()==2){
                 mMusicList.get(0).setNext(mMusicList.get(mMusicList.size()-1));

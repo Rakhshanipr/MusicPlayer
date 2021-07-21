@@ -50,6 +50,7 @@ public class MusicService extends Service {
         mMediaPlayer.setDataSource(path);
         mMediaPlayer.prepare();
         mMediaPlayer.start();
+        getMediaPlayer().getDuration();
     }
 
     public MediaPlayer getMediaPlayer(){

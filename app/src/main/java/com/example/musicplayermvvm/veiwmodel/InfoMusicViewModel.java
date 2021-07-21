@@ -46,7 +46,7 @@ public class InfoMusicViewModel {
     }
 
     public String getTime() {
-        return mMusic.getDuration();
+        return mMusic.getFormatedTime();
     }
 
     public String getSigner() {

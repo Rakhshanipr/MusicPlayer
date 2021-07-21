@@ -9,11 +9,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.services.MusicService;
 
 import java.io.IOException;
+import java.io.PushbackInputStream;
 
 public class PlayMusicViewModel extends AndroidViewModel {
 
@@ -23,10 +26,11 @@ public class PlayMusicViewModel extends AndroidViewModel {
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
 
+    MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
+
     public PlayMusicViewModel(@NonNull Application application) {
         super(application);
         mContext = getApplication().getApplicationContext();
-
     }
 
     public Music getMusic() {
@@ -41,8 +45,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
         if (mBound) {
 
             try {
-
-
                 mMusicService.changeMediaPlayerData(getMusic().getFilePath());
 
             } catch (IOException e) {
@@ -57,6 +59,9 @@ public class PlayMusicViewModel extends AndroidViewModel {
             throw new Exception("must be set Interface reaction");
         }
         mMusic = music;
+        if (mMusicService!=null)
+        mReactionMusicPlayer.setInfo(mMusic);
+
         mContext.bindService(MusicService.newIntent(mContext), mConnection
                 , Context.BIND_AUTO_CREATE);
     }
@@ -93,15 +98,24 @@ public class PlayMusicViewModel extends AndroidViewModel {
     }
 
     public String getTitle(){
-        return mMusic.getName();
+        return mMusicService==null ? "In the name of God": mMusic.getName();
     }
 
     public String getFullTime(){
-        return Integer.toString(mMusicService.getDuration());
+        return mMusicService==null ? "12:12":  Integer.toString(mMusicService.getDuration());
+    }
+
+    public int getCurrentMillis(){
+        return mMusicService.getCurrentPosition();
+    }
+
+
+    public int getFullTimeSeconds(){
+        return Music.convertMilliToSecond(mMusic.getDuration());
     }
 
     public String getCurrentPosition(){
-        return Integer.toString(mMusicService.getCurrentPosition());
+        return mMusicService==null ? "00:00": Music.convertMilliTotime(mMusicService.getCurrentPosition());
     }
 
     public void PauseMuisc() {
@@ -121,6 +135,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
             mMusicService = binder.getMusicService();
             mBound = true;
             setServicesData();
+            mReactionMusicPlayer.setInfo(mMusic);
         }
 
         @Override
@@ -131,6 +146,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
     public interface IReactionMusicPlayer {
         void playPauseClicked();
-
+        void setInfo(Music music);
     }
 }

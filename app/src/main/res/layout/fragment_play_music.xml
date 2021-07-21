@@ -5,12 +5,8 @@
 
     <data>
         <variable
-            name="PlayMusicViewModel"
+            name="MusicPlayViewModel"
             type="com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel" />
-
-        <variable
-            name="context"
-            type="android.content.Context" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,11 +16,16 @@
 
         <SeekBar
             android:id="@+id/seekBar_duration"
+            style="@android:style/Widget.Material.Light.SeekBar"
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:backgroundTint="#5C26BD"
+            android:max="@{MusicPlayViewModel.fullTimeSeconds}"
+            android:min="0"
+            android:progressTint="#431495"
             app:layout_constraintBottom_toTopOf="@+id/imageButton_minus"
             app:layout_constraintEnd_toStartOf="@+id/textView_duration"
             app:layout_constraintHorizontal_bias="0.0"
@@ -34,9 +35,9 @@
             android:id="@+id/imageButton_play_puase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()-> PlayMusicViewModel.PlayMuisc()}"
             android:padding="0dp"
             android:src="@mipmap/pausemusic"
+            android:onClick="@{()-> MusicPlayViewModel.PlayMuisc()}"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_next"
             app:layout_constraintTop_toTopOf="@+id/imageButton_next" />
@@ -46,17 +47,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_media_next"
-            android:onClick="@{()-> PlayMusicViewModel.nextMusic()}"
+            android:onClick="@{()-> MusicPlayViewModel.nextMusic()}"
+
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_round"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_round"
             app:layout_constraintTop_toTopOf="@+id/imageButton_round" />
 
         <ImageButton
+            android:layout_height="wrap_content"
             android:id="@+id/imageButton_prev"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()-> PlayMusicViewModel.prevMusic()}"
             android:src="@android:drawable/ic_media_previous"
+            android:onClick="@{()-> MusicPlayViewModel.prevMusic()}"
+
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_play_puase"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_play_puase"
             app:layout_constraintTop_toTopOf="@+id/imageButton_play_puase" />
@@ -103,10 +106,11 @@
         <TextView
             android:id="@+id/textView_title_music"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="21dp"
             android:layout_marginBottom="16dp"
             android:textColor="#000000"
-            android:text="@{()-> PlayMusicViewModel.title}"
+            tools:text="Title"
+            android:text="@{MusicPlayViewModel.title}"
             app:layout_constraintBottom_toTopOf="@+id/seekBar_duration"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_like"
             app:layout_constraintStart_toEndOf="@+id/imageButton_add_to_list" />
@@ -115,9 +119,9 @@
             android:id="@+id/textView_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{MusicPlayViewModel.fullTime}"
             android:layout_marginEnd="8dp"
             android:textColor="#000000"
-            android:text="@{()-> PlayMusicViewModel.fullTime}"
 
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -127,8 +131,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{()-> PlayMusicViewModel.currentPosition}"
             android:textColor="#000000"
+            android:text="00:00"
+
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
             app:layout_constraintStart_toStartOf="parent" />
 

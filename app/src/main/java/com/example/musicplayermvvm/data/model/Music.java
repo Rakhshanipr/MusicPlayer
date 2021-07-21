@@ -1,18 +1,42 @@
 package com.example.musicplayermvvm.data.model;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 public class Music implements Serializable {
 
     private String mName;
     private String mArtist;
     private String mAlbum;
-    private String mDuration;
+    private Long mDuration;
     private String mFilePath;
     public Music mPrev=null;
     public Music mNext=null;
 
     public Music() {
+    }
+
+    public static String convertMilliTotime(long milliseconds){
+
+        String minutes
+                = Long.toString(TimeUnit.MILLISECONDS.toMinutes(milliseconds));
+
+        String seconds
+                =Long.toString( (TimeUnit.MILLISECONDS.toSeconds(milliseconds)
+                % 60));
+
+        if (minutes.length()==1)
+            minutes="0"+minutes;
+
+        if (seconds.length()==1)
+            seconds="0"+seconds;
+
+        return minutes+":"+seconds;
+
+    }
+
+    public static int convertMilliToSecond(long milliseconds){
+        return (int)TimeUnit.MILLISECONDS.toSeconds(milliseconds);
     }
 
     public Music getPrev() {
@@ -31,7 +55,7 @@ public class Music implements Serializable {
         mNext = next;
     }
 
-    public Music(String name, String artist, String album, String duration, String filePath) {
+    public Music(String name, String artist, String album, Long duration, String filePath) {
         mName = name;
         mArtist = artist;
         mAlbum = album;
@@ -63,11 +87,15 @@ public class Music implements Serializable {
         mAlbum = album;
     }
 
-    public String getDuration() {
+    public Long getDuration() {
         return mDuration;
     }
 
-    public void setDuration(String duration) {
+    public String getFormatedTime(){
+        return convertMilliTotime(getDuration());
+    }
+
+    public void setDuration(Long duration) {
         mDuration = duration;
     }
 

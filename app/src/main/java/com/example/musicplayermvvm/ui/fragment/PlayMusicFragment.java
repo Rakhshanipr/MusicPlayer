@@ -1,8 +1,7 @@
 package com.example.musicplayermvvm.ui.fragment;
 
-
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,9 @@ import com.example.musicplayermvvm.databinding.FragmentPlayMusicBinding;
 import com.example.musicplayermvvm.services.MusicService;
 import com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel;
 
+import java.util.HashMap;
+import java.util.Random;
+
 public class PlayMusicFragment extends Fragment {
 
     //region defind static method and variable
@@ -26,34 +28,58 @@ public class PlayMusicFragment extends Fragment {
     public static PlayMusicFragment newInstance(Music music) {
         PlayMusicFragment fragment = new PlayMusicFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARGS_KEY_MUSIC,music);
+        args.putSerializable(ARGS_KEY_MUSIC, music);
         fragment.setArguments(args);
         return fragment;
     }
     //endregion
 
+    Handler mHandler=new Handler();
     FragmentPlayMusicBinding mPlayMusicBinding;
-    MusicService mMusicService;
+
     Music mMusic;
     PlayMusicViewModel mMusicViewModel;
+
+    Runnable updateCurrentMusic = new Runnable() {
+
+        @Override
+        public void run() {
+            mPlayMusicBinding.textViewPlayedTime.setText(mMusicViewModel.getCurrentPosition());
+            mPlayMusicBinding.seekBarDuration.setProgress(
+                    Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()),true);
+            mHandler.postDelayed(this,1000);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMusic=(Music) getArguments().getSerializable(ARGS_KEY_MUSIC);
-        mMusicViewModel=new ViewModelProvider(requireActivity()).get(PlayMusicViewModel.class);
+        initial();
+    }
+
+    private void initial() {
+
+        mMusic = (Music) getArguments().getSerializable(ARGS_KEY_MUSIC);
+
+        mMusicViewModel = new ViewModelProvider(requireActivity()).get(PlayMusicViewModel.class);
 
         mMusicViewModel.setReactionMusicPlayer(new PlayMusicViewModel.IReactionMusicPlayer() {
             @Override
             public void playPauseClicked() {
-                if (mMusicViewModel.isPlaying()){
+                if (mMusicViewModel.isPlaying()) {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
                             AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
-                }else{
+                } else {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
                             AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
                 }
+            }
+
+            @Override
+            public void setInfo(Music music) {
+                mPlayMusicBinding.textViewTitleMusic.setText(music.getName());
+                mPlayMusicBinding.textViewDuration.setText(music.getFormatedTime());
             }
         });
 
@@ -62,37 +88,19 @@ public class PlayMusicFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mPlayMusicBinding= DataBindingUtil.inflate(inflater
-                ,R.layout.fragment_play_music
-                ,container,false);
+        mPlayMusicBinding = DataBindingUtil.inflate(inflater
+                , R.layout.fragment_play_music
+                , container, false);
 
-        mPlayMusicBinding.setPlayMusicViewModel(mMusicViewModel);
+        mPlayMusicBinding.setMusicPlayViewModel(mMusicViewModel);
 
-
-
+        mHandler.postDelayed(updateCurrentMusic, 1000);
 
         return mPlayMusicBinding.getRoot();
     }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        Intent intent = MusicService.newIntent(getContext());
-//
-//        getContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        getContext().unbindService(mConnection);
-//    }
-
 }
