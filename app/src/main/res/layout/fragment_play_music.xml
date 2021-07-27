@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:backgroundTint="#B59F9F">
 
         <SeekBar
             android:id="@+id/seekBar_duration"
@@ -23,6 +24,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="#5C26BD"
+            android:clickable="true"
             android:max="@{MusicPlayViewModel.fullTimeSeconds}"
             android:min="0"
             android:progressTint="#431495"
@@ -35,9 +37,9 @@
             android:id="@+id/imageButton_play_puase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()-> MusicPlayViewModel.PlayMuisc()}"
             android:padding="0dp"
             android:src="@mipmap/pausemusic"
-            android:onClick="@{()-> MusicPlayViewModel.PlayMuisc()}"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_next"
             app:layout_constraintTop_toTopOf="@+id/imageButton_next" />
@@ -46,19 +48,19 @@
             android:id="@+id/imageButton_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_next"
             android:onClick="@{()-> MusicPlayViewModel.nextMusic()}"
+            android:src="@android:drawable/ic_media_next"
 
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_round"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_round"
             app:layout_constraintTop_toTopOf="@+id/imageButton_round" />
 
         <ImageButton
-            android:layout_height="wrap_content"
             android:id="@+id/imageButton_prev"
             android:layout_width="wrap_content"
-            android:src="@android:drawable/ic_media_previous"
+            android:layout_height="wrap_content"
             android:onClick="@{()-> MusicPlayViewModel.prevMusic()}"
+            android:src="@android:drawable/ic_media_previous"
 
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_play_puase"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_play_puase"
@@ -108,19 +110,19 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginBottom="16dp"
-            android:textColor="#000000"
-            tools:text="Title"
             android:text="@{MusicPlayViewModel.title}"
+            android:textColor="#000000"
             app:layout_constraintBottom_toTopOf="@+id/seekBar_duration"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_like"
-            app:layout_constraintStart_toEndOf="@+id/imageButton_add_to_list" />
+            app:layout_constraintStart_toEndOf="@+id/imageButton_add_to_list"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/textView_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{MusicPlayViewModel.fullTime}"
             android:layout_marginEnd="8dp"
+            android:text="@{MusicPlayViewModel.fullTime}"
             android:textColor="#000000"
 
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
@@ -131,8 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textColor="#000000"
             android:text="00:00"
+            android:textColor="#000000"
 
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_duration"
             app:layout_constraintStart_toStartOf="parent" />

@@ -20,11 +20,13 @@ import java.io.PushbackInputStream;
 
 public class PlayMusicViewModel extends AndroidViewModel {
 
+    //region defind variable
     Context mContext;
     Music mMusic;
     MusicService mMusicService;
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
+    //endregion
 
     MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
 
@@ -51,7 +53,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void setMusic(Music music) throws Exception {
@@ -118,6 +119,11 @@ public class PlayMusicViewModel extends AndroidViewModel {
         return mMusicService==null ? "00:00": Music.convertMilliTotime(mMusicService.getCurrentPosition());
     }
 
+    public void setCurrentPosition(int position){
+        if (mMusicService!=null)
+        mMusicService.setCurrentPosition(position);
+    }
+
     public void PauseMuisc() {
         mMusicService.playPauseMusic();
         mReactionMusicPlayer.playPauseClicked();
@@ -129,7 +135,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
             if (!(service instanceof MusicService.MusicBinder))
                 Log.e("service", "this service is wrong");
-
 
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             mMusicService = binder.getMusicService();

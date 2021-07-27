@@ -39,6 +39,10 @@ public class Music implements Serializable {
         return (int)TimeUnit.MILLISECONDS.toSeconds(milliseconds);
     }
 
+    public static int convertSecondToMillis(int second){
+        return second*1000;
+    }
+
     public Music getPrev() {
         return mPrev;
     }

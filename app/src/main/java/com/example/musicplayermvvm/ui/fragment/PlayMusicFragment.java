@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.databinding.DataBindingUtil;
@@ -36,10 +37,8 @@ public class PlayMusicFragment extends Fragment {
 
     Handler mHandler=new Handler();
     FragmentPlayMusicBinding mPlayMusicBinding;
-
     Music mMusic;
     PlayMusicViewModel mMusicViewModel;
-
     Runnable updateCurrentMusic = new Runnable() {
 
         @Override
@@ -98,6 +97,26 @@ public class PlayMusicFragment extends Fragment {
                 , container, false);
 
         mPlayMusicBinding.setMusicPlayViewModel(mMusicViewModel);
+
+        mPlayMusicBinding.seekBarDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+int a=10;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                int y=seekBar.getProgress();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress=seekBar.getProgress();
+                seekBar.setProgress(progress);
+                mMusicViewModel.setCurrentPosition(Music.convertSecondToMillis(seekBar.getProgress()));
+            }
+        });
+
 
         mHandler.postDelayed(updateCurrentMusic, 1000);
 

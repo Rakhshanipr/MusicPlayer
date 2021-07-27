@@ -8,7 +8,6 @@ import android.os.Binder;
 import android.os.IBinder;
 
 import java.io.IOException;
-import java.util.concurrent.Executor;
 
 public class MusicService extends Service {
 
@@ -22,7 +21,7 @@ public class MusicService extends Service {
 
     MediaPlayer mMediaPlayer;
 
-    IBinder mBinder=new MusicBinder();
+    IBinder mBinder = new MusicBinder();
 
     public MusicService() {
     }
@@ -37,14 +36,17 @@ public class MusicService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    public void setCurrentPosition(int position) {
+        mMediaPlayer.seekTo(position);
+    }
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        mMediaPlayer=mediaPlayer;
+        mMediaPlayer = mediaPlayer;
     }
 
     public void changeMediaPlayerData(String path) throws IOException {
-        if (getMediaPlayer()==null){
-            mMediaPlayer=new MediaPlayer();
+        if (getMediaPlayer() == null) {
+            mMediaPlayer = new MediaPlayer();
         }
         mMediaPlayer.reset();
         mMediaPlayer.setDataSource(path);
@@ -53,31 +55,31 @@ public class MusicService extends Service {
         getMediaPlayer().getDuration();
     }
 
-    public MediaPlayer getMediaPlayer(){
+    public MediaPlayer getMediaPlayer() {
         return mMediaPlayer;
     }
 
-    public int getCurrentPosition(){
+    public int getCurrentPosition() {
         return mMediaPlayer.getCurrentPosition();
     }
 
-    public int getDuration(){
+    public int getDuration() {
         return mMediaPlayer.getDuration();
     }
 
-    public void playNext(){
+    public void playNext() {
 
     }
 
-    public void playPauseMusic(){
+    public void playPauseMusic() {
         if (getMediaPlayer().isPlaying())
             getMediaPlayer().pause();
         else
             getMediaPlayer().start();
     }
 
-    public class MusicBinder extends Binder{
-        public MusicService getMusicService(){
+    public class MusicBinder extends Binder {
+        public MusicService getMusicService() {
             return MusicService.this;
         }
     }
