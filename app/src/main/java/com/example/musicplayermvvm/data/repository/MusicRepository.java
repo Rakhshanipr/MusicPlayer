@@ -117,7 +117,7 @@ public class MusicRepository {
             }
             mListMutableLiveDataMusic.setValue(mMusicList);
         } else {
-            mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicList);
+            mListMutableLiveDataMusic.setValue(MainViewPagerAdapter.sMusicListSelected);
         }
     }
 

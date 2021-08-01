@@ -20,11 +20,16 @@ public class MusicService extends Service {
     //endregion
 
     MediaPlayer mMediaPlayer;
+    String mPath = "";
+    ICallBackMusicService mCallBackMusicService;
 
     IBinder mBinder = new MusicBinder();
 
     public MusicService() {
+
     }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -34,6 +39,10 @@ public class MusicService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public void setCallBackMusicService(ICallBackMusicService callBackMusicService){
+        mCallBackMusicService=callBackMusicService;
     }
 
     public void setCurrentPosition(int position) {
@@ -48,11 +57,18 @@ public class MusicService extends Service {
         if (getMediaPlayer() == null) {
             mMediaPlayer = new MediaPlayer();
         }
+        mPath = path;
         mMediaPlayer.reset();
         mMediaPlayer.setDataSource(path);
         mMediaPlayer.prepare();
         mMediaPlayer.start();
-        getMediaPlayer().getDuration();
+
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mCallBackMusicService.completeSong();
+            }
+        });
     }
 
     public MediaPlayer getMediaPlayer() {
@@ -82,5 +98,11 @@ public class MusicService extends Service {
         public MusicService getMusicService() {
             return MusicService.this;
         }
+        public void songCompleted(){
+
+        }
+    }
+    public interface ICallBackMusicService{
+        void completeSong();
     }
 }

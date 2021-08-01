@@ -73,6 +73,7 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
                         @Override
                         public void onChanged(List<Music> music) {
                             mMusicAdapter.setMusicList(music);
+                            MainViewPagerAdapter.sMusicListFull=music;
                             mMusicAdapter.notifyDataSetChanged();
                         }
                     });

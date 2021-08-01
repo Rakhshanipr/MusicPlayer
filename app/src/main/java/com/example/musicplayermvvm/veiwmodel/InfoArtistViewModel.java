@@ -6,14 +6,10 @@ import android.content.Intent;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Artist;
-import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.ui.activity.SelectedMusicActivity;
-import com.example.musicplayermvvm.ui.fragment.ListMusicFragment;
 
 public class InfoArtistViewModel extends BaseObservable {
 
@@ -48,7 +44,7 @@ public class InfoArtistViewModel extends BaseObservable {
     public void onClickLayout(){
 
         MainViewPagerAdapter.sFragment_state=1;
-        MainViewPagerAdapter.sMusicList=mArtist.getMusicList();
+        MainViewPagerAdapter.sMusicListSelected =mArtist.getMusicList();
 
         Intent intent = new Intent(mContext, SelectedMusicActivity.class);
         mContext.startActivity(intent);

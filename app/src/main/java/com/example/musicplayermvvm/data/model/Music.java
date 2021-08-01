@@ -35,6 +35,27 @@ public class Music implements Serializable {
 
     }
 
+    public static String convertSecondTotime(int second){
+
+        int sec=second;
+        String minutes
+                = Long.toString(TimeUnit.SECONDS.toHours(second));
+
+
+
+        String seconds
+                =Integer.toString(sec%60);
+
+        if (minutes.length()==1)
+            minutes="0"+minutes;
+
+        if (seconds.length()==1)
+            seconds="0"+seconds;
+
+        return minutes+":"+seconds;
+
+    }
+
     public static int convertMilliToSecond(long milliseconds){
         return (int)TimeUnit.MILLISECONDS.toSeconds(milliseconds);
     }

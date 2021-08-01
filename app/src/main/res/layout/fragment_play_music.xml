@@ -37,7 +37,7 @@
             android:id="@+id/imageButton_play_puase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()-> MusicPlayViewModel.PlayMuisc()}"
+            android:onClick="@{()-> MusicPlayViewModel.playMuisc()}"
             android:padding="0dp"
             android:src="@mipmap/pausemusic"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
@@ -70,6 +70,9 @@
             android:id="@+id/imageButton_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:onClick="@{()-> MusicPlayViewModel.repeat()}"
+
             android:src="@android:drawable/stat_notify_sync_noanim"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_minus"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_minus"
@@ -79,6 +82,9 @@
             android:id="@+id/imageButton_random"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:onClick="@{()-> MusicPlayViewModel.randome()}"
+
             android:src="@android:drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_prev"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_prev"

@@ -15,7 +15,8 @@ import java.util.List;
 public class MainViewPagerAdapter extends FragmentStateAdapter {
 
     public static int sFragment_state=0;
-    public static List<Music> sMusicList=null;
+    public static List<Music> sMusicListSelected =null;
+    public static List<Music> sMusicListFull =null;
 
     public MainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);

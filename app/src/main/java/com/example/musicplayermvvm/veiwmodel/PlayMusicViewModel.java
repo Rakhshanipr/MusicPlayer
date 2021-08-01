@@ -9,46 +9,52 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.services.MusicService;
+import com.example.musicplayermvvm.utilities.QueryPreferences;
 
 import java.io.IOException;
-import java.io.PushbackInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class PlayMusicViewModel extends AndroidViewModel {
 
     //region defind variable
+
     Context mContext;
     Music mMusic;
     MusicService mMusicService;
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
-    //endregion
 
-    MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
+    List<Music> mMusicListPrev=new ArrayList<>();
+
+    //endregion
 
     public PlayMusicViewModel(@NonNull Application application) {
         super(application);
         mContext = getApplication().getApplicationContext();
+        mContext.bindService(MusicService.newIntent(mContext), mConnection
+                , Context.BIND_AUTO_CREATE);
+        mMusicListPrev=new ArrayList<>();
     }
 
     public Music getMusic() {
         return mMusic;
     }
 
-    public boolean isPlaying(){
+    public boolean isPlaying() {
         return mMusicService.getMediaPlayer().isPlaying();
     }
 
     public void setServicesData() {
         if (mBound) {
-
             try {
                 mMusicService.changeMediaPlayerData(getMusic().getFilePath());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,15 +62,26 @@ public class PlayMusicViewModel extends AndroidViewModel {
     }
 
     public void setMusic(Music music) throws Exception {
-        if (mReactionMusicPlayer==null){
+        if (mReactionMusicPlayer == null) {
             throw new Exception("must be set Interface reaction");
         }
         mMusic = music;
-        if (mMusicService!=null)
-        mReactionMusicPlayer.setInfo(mMusic);
+        if (mMusicListPrev.size() <= 1) {
+            mMusicListPrev.add(music);
+        }
+        else{
+            if (!music.getFilePath().equals(mMusicListPrev
+                    .get(mMusicListPrev.size() - 2).getFilePath())) {
+                mMusicListPrev.add(music);
+            }
+        }
 
-        mContext.bindService(MusicService.newIntent(mContext), mConnection
-                , Context.BIND_AUTO_CREATE);
+        if (mMusicService != null) {
+            mMusicService.changeMediaPlayerData(music.getFilePath());
+            mReactionMusicPlayer.setInfo(mMusic);
+        }
+
+
     }
 
     public IReactionMusicPlayer getReactionMusicPlayer() {
@@ -75,53 +92,92 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mReactionMusicPlayer = reactionMusicPlayer;
     }
 
-    public void PlayMuisc() {
+    public void playMuisc() {
         mMusicService.playPauseMusic();
         mReactionMusicPlayer.playPauseClicked();
     }
 
     public void nextMusic() {
         try {
-            mMusicService.changeMediaPlayerData(getMusic().getNext().getFilePath());
-            setMusic(getMusic().getNext());
+            if (QueryPreferences.getRandomPref(mContext)) {
+                if (MainViewPagerAdapter.sFragment_state == 0) {
+                    int size = MainViewPagerAdapter.sMusicListFull.size();
+                    int randome = new Random().nextInt(size);
+                    Music music = MainViewPagerAdapter.sMusicListFull.get(randome);
+
+                    setMusic(music);
+                } else {
+                    int size = MainViewPagerAdapter.sMusicListSelected.size();
+                    int randome = new Random().nextInt(size);
+                    Music music = MainViewPagerAdapter.sMusicListSelected.get(randome);
+                    setMusic(music);
+                }
+            } else {
+                setMusic(getMusic().getNext());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void prevMusic(){
+    public void prevMusic() {
         try {
-            mMusicService.changeMediaPlayerData(getMusic().getPrev().getFilePath());
-            setMusic(getMusic().getPrev());
+            if (mMusicListPrev.size() != 0) {
+                mMusicService.changeMediaPlayerData(mMusicListPrev
+                        .get(mMusicListPrev.size() - 2).getFilePath());
+
+                setMusic(mMusicListPrev
+                        .get(mMusicListPrev.size() - 2));
+                mMusicListPrev.remove(mMusicListPrev.size() - 1);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String getTitle(){
-        return mMusicService==null ? "In the name of God": mMusic.getName();
+    public void randome() {
+        boolean isActive = QueryPreferences.getRandomPref(mContext);
+        if (isActive) {
+            QueryPreferences.setRandomPref(mContext, false);
+        } else
+            QueryPreferences.setRandomPref(mContext, true);
+        mReactionMusicPlayer.randome(isActive);
     }
 
-    public String getFullTime(){
-        return mMusicService==null ? "12:12":  Integer.toString(mMusicService.getDuration());
+    public void repeat() {
+        boolean isActive = QueryPreferences.getRepeatPref(mContext);
+        if (isActive) {
+            QueryPreferences.setRepeatPref(mContext, false);
+        } else
+            QueryPreferences.setRepeatPref(mContext, true);
+        mReactionMusicPlayer.repeat(isActive);
     }
 
-    public int getCurrentMillis(){
+    public String getTitle() {
+        return mMusicService == null ? "In the name of God" : mMusic.getName();
+    }
+
+    public String getFullTime() {
+        return mMusicService == null ? "12:12" : Integer.toString(mMusicService.getDuration());
+    }
+
+    public int getCurrentMillis() {
         return mMusicService.getCurrentPosition();
     }
 
-
-    public int getFullTimeSeconds(){
+    public int getFullTimeSeconds() {
         return Music.convertMilliToSecond(mMusic.getDuration());
     }
 
-    public String getCurrentPosition(){
-        return mMusicService==null ? "00:00": Music.convertMilliTotime(mMusicService.getCurrentPosition());
+    public String getCurrentPosition() {
+        return mMusicService == null ? "00:00" : Music.convertMilliTotime(mMusicService.getCurrentPosition());
     }
 
-    public void setCurrentPosition(int position){
-        if (mMusicService!=null)
-        mMusicService.setCurrentPosition(position);
+    public void setCurrentPosition(int position) {
+        if (mMusicService != null)
+            mMusicService.setCurrentPosition(position);
     }
 
     public void PauseMuisc() {
@@ -140,6 +196,21 @@ public class PlayMusicViewModel extends AndroidViewModel {
             mMusicService = binder.getMusicService();
             mBound = true;
             setServicesData();
+            mMusicService.setCallBackMusicService(new MusicService.ICallBackMusicService() {
+                @Override
+                public void completeSong() {
+                    if (QueryPreferences.getRepeatPref(mContext)) {
+                        try {
+                            mMusicService.changeMediaPlayerData(getMusic().getFilePath());
+                            setMusic(getMusic());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        nextMusic();
+                    }
+                }
+            });
             mReactionMusicPlayer.setInfo(mMusic);
         }
 
@@ -151,6 +222,12 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
     public interface IReactionMusicPlayer {
         void playPauseClicked();
+
         void setInfo(Music music);
+
+        void randome(boolean isActive);
+
+        void repeat(boolean isActive);
     }
+
 }

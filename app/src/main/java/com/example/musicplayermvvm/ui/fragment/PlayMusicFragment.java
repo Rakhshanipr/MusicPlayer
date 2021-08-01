@@ -15,11 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.FragmentPlayMusicBinding;
-import com.example.musicplayermvvm.services.MusicService;
 import com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel;
-
-import java.util.HashMap;
-import java.util.Random;
 
 public class PlayMusicFragment extends Fragment {
 
@@ -35,7 +31,7 @@ public class PlayMusicFragment extends Fragment {
     }
     //endregion
 
-    Handler mHandler=new Handler();
+    Handler mHandler = new Handler();
     FragmentPlayMusicBinding mPlayMusicBinding;
     Music mMusic;
     PlayMusicViewModel mMusicViewModel;
@@ -45,8 +41,8 @@ public class PlayMusicFragment extends Fragment {
         public void run() {
             mPlayMusicBinding.textViewPlayedTime.setText(mMusicViewModel.getCurrentPosition());
             mPlayMusicBinding.seekBarDuration.setProgress(
-                    Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()),true);
-            mHandler.postDelayed(this,1000);
+                    Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
+            mHandler.postDelayed(this, 1000);
         }
     };
 
@@ -80,6 +76,27 @@ public class PlayMusicFragment extends Fragment {
                 mPlayMusicBinding.textViewTitleMusic.setText(music.getName());
                 mPlayMusicBinding.textViewDuration.setText(music.getFormatedTime());
             }
+
+            @Override
+            public void randome(boolean isActive) {
+                if (isActive){
+                    //Tobe change view of randome image button
+                }
+                else{
+
+                }
+            }
+
+            @Override
+            public void repeat(boolean isActive){
+                if (isActive){
+                    //Tobe change view of randome image button
+                }
+                else{
+
+                }
+            }
+
         });
 
         try {
@@ -98,28 +115,32 @@ public class PlayMusicFragment extends Fragment {
 
         mPlayMusicBinding.setMusicPlayViewModel(mMusicViewModel);
 
-        mPlayMusicBinding.seekBarDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-int a=10;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                int y=seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int progress=seekBar.getProgress();
-                seekBar.setProgress(progress);
-                mMusicViewModel.setCurrentPosition(Music.convertSecondToMillis(seekBar.getProgress()));
-            }
-        });
-
+       setListners();
 
         mHandler.postDelayed(updateCurrentMusic, 1000);
 
         return mPlayMusicBinding.getRoot();
     }
+
+    private void setListners() {
+        mPlayMusicBinding.seekBarDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    seekBar.setProgress(progress);
+                    mMusicViewModel.setCurrentPosition(Music.convertSecondToMillis(seekBar.getProgress()));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
 }
