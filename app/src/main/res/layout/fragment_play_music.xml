@@ -116,11 +116,15 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginBottom="16dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:text="@{MusicPlayViewModel.title}"
             android:textColor="#000000"
+            android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/seekBar_duration"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_like"
-            app:layout_constraintStart_toEndOf="@+id/imageButton_add_to_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Title" />
 
         <TextView
@@ -175,24 +179,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton_add_to_list"
-            android:layout_width="37dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="8dp"
-            android:src="@android:drawable/ic_input_add"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_title_music"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_title_music" />
-
-        <ImageButton
             android:id="@+id/imageButton_like"
             android:layout_width="39dp"
             android:layout_height="43dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{()-> MusicPlayViewModel.onLike()}"
+
             android:src="@android:drawable/star_big_on"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_title_music"
+            app:layout_constraintBottom_toTopOf="@+id/textView_title_music"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView_mainImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageButton_like"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_title_music" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton_share"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

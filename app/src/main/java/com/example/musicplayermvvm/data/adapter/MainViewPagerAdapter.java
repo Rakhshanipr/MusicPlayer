@@ -1,5 +1,7 @@
 package com.example.musicplayermvvm.data.adapter;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -9,6 +11,7 @@ import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.ui.fragment.ListAlbumFragment;
 import com.example.musicplayermvvm.ui.fragment.ListArtistFragment;
 import com.example.musicplayermvvm.ui.fragment.ListMusicFragment;
+import com.example.musicplayermvvm.utilities.QueryPreferences;
 
 import java.util.List;
 
@@ -18,8 +21,10 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
     public static List<Music> sMusicListSelected =null;
     public static List<Music> sMusicListFull =null;
 
-    public MainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    Context mContext;
+    public MainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity,Context context) {
         super(fragmentActivity);
+        mContext=context;
     }
 
     @Override
@@ -32,12 +37,18 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
             return ListArtistFragment.newInstance();
         }else if (position==2){
             return ListAlbumFragment.newInstance();
+        } else if (position==3){
+            sFragment_state=1;
+
+            sMusicListSelected= QueryPreferences.getMusicsLikePref(mContext);
+
+            return ListMusicFragment.newInstance();
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

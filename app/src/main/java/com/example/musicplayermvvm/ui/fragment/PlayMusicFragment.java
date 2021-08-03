@@ -1,5 +1,8 @@
 package com.example.musicplayermvvm.ui.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -53,6 +56,26 @@ public class PlayMusicFragment extends Fragment {
         initial();
     }
 
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        mPlayMusicBinding = DataBindingUtil.inflate(inflater
+                , R.layout.fragment_play_music
+                , container, false);
+
+        mPlayMusicBinding.setMusicPlayViewModel(mMusicViewModel);
+
+       setListners();
+
+        mHandler.postDelayed(updateCurrentMusic, 1000);
+
+
+        return mPlayMusicBinding.getRoot();
+    }
+
+
     private void initial() {
 
         mMusic = (Music) getArguments().getSerializable(ARGS_KEY_MUSIC);
@@ -75,6 +98,28 @@ public class PlayMusicFragment extends Fragment {
             public void setInfo(Music music) {
                 mPlayMusicBinding.textViewTitleMusic.setText(music.getName());
                 mPlayMusicBinding.textViewDuration.setText(music.getFormatedTime());
+
+                //region setCover
+                mMusic=music;
+                MediaMetadataRetriever mMediaMetadataRetriever = new MediaMetadataRetriever();
+
+                mMediaMetadataRetriever.setDataSource(music.getFilePath());
+
+                final byte[] mPic = mMediaMetadataRetriever.getEmbeddedPicture();
+                if (mPic != null) {
+                    BitmapFactory.Options bitmapFactory = new BitmapFactory.Options();
+                    bitmapFactory.outWidth = 60;
+                    bitmapFactory.outHeight = 60;
+                    Bitmap songImage = BitmapFactory.decodeByteArray(mPic, 0, mPic.length, bitmapFactory);
+                    mPlayMusicBinding.imageViewMainImage.setImageBitmap(songImage);
+
+                }else{
+                    mPlayMusicBinding.imageViewMainImage.setImageDrawable(
+                            getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                }
+
+                    //endregion
+                like(mMusicViewModel.isLiked());
             }
 
             @Override
@@ -97,32 +142,34 @@ public class PlayMusicFragment extends Fragment {
                 }
             }
 
+            @Override
+            public void like(boolean isActive) {
+                if (isActive){
+                    mPlayMusicBinding.imageButtonLike.setImageBitmap(
+                            BitmapFactory.decodeResource(getResources(), R.mipmap.like));
+                }
+                else{
+                    mPlayMusicBinding.imageButtonLike.setImageBitmap(
+                            BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
+                }
+            }
+
         });
+
 
         try {
             mMusicViewModel.setMusic(mMusic);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mPlayMusicBinding = DataBindingUtil.inflate(inflater
-                , R.layout.fragment_play_music
-                , container, false);
-
-        mPlayMusicBinding.setMusicPlayViewModel(mMusicViewModel);
-
-       setListners();
-
-        mHandler.postDelayed(updateCurrentMusic, 1000);
-
-        return mPlayMusicBinding.getRoot();
-    }
 
     private void setListners() {
+        mPlayMusicBinding.textViewTitleMusic.setSelected(true);
         mPlayMusicBinding.seekBarDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -141,6 +188,14 @@ public class PlayMusicFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-    }
 
+        if (mMusicViewModel.isLiked()){
+            mPlayMusicBinding.imageButtonLike.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground));
+        }
+        else{
+            mPlayMusicBinding.imageButtonLike.setImageBitmap(
+                    BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
+        }
+    }
 }

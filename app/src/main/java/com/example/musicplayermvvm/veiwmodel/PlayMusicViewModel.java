@@ -9,7 +9,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Music;
@@ -31,7 +30,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
 
-    List<Music> mMusicListPrev=new ArrayList<>();
+    List<Music> mMusicListPrev = new ArrayList<>();
 
     //endregion
 
@@ -40,7 +39,8 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mContext = getApplication().getApplicationContext();
         mContext.bindService(MusicService.newIntent(mContext), mConnection
                 , Context.BIND_AUTO_CREATE);
-        mMusicListPrev=new ArrayList<>();
+        mMusicListPrev = new ArrayList<>();
+
     }
 
     public Music getMusic() {
@@ -68,8 +68,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mMusic = music;
         if (mMusicListPrev.size() <= 1) {
             mMusicListPrev.add(music);
-        }
-        else{
+        } else {
             if (!music.getFilePath().equals(mMusicListPrev
                     .get(mMusicListPrev.size() - 2).getFilePath())) {
                 mMusicListPrev.add(music);
@@ -90,6 +89,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
     public void setReactionMusicPlayer(IReactionMusicPlayer reactionMusicPlayer) {
         mReactionMusicPlayer = reactionMusicPlayer;
+
     }
 
     public void playMuisc() {
@@ -130,6 +130,10 @@ public class PlayMusicViewModel extends AndroidViewModel {
                 setMusic(mMusicListPrev
                         .get(mMusicListPrev.size() - 2));
                 mMusicListPrev.remove(mMusicListPrev.size() - 1);
+            } else {
+                mMusicService.changeMediaPlayerData(getMusic().getPrev().getFilePath());
+
+                setMusic(getMusic().getPrev());
             }
 
         } catch (Exception e) {
@@ -155,6 +159,18 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mReactionMusicPlayer.repeat(isActive);
     }
 
+    public void onLike() {
+        if (QueryPreferences.getMusicLikePref(mContext,getMusic().getFilePath())){
+            mReactionMusicPlayer.like(false);
+            QueryPreferences.setMusicLikePref(mContext,getMusic(),true);
+        }else {
+            mReactionMusicPlayer.like(true);
+            QueryPreferences.setMusicLikePref(mContext, getMusic(), false);
+        }
+
+
+    }
+
     public String getTitle() {
         return mMusicService == null ? "In the name of God" : mMusic.getName();
     }
@@ -164,8 +180,10 @@ public class PlayMusicViewModel extends AndroidViewModel {
     }
 
     public int getCurrentMillis() {
-        return mMusicService.getCurrentPosition();
+        return mMusicService==null? 0: mMusicService.getCurrentPosition();
     }
+
+
 
     public int getFullTimeSeconds() {
         return Music.convertMilliToSecond(mMusic.getDuration());
@@ -183,6 +201,10 @@ public class PlayMusicViewModel extends AndroidViewModel {
     public void PauseMuisc() {
         mMusicService.playPauseMusic();
         mReactionMusicPlayer.playPauseClicked();
+    }
+
+    public boolean isLiked(){
+        return QueryPreferences.getMusicLikePref(mContext,getMusic().getFilePath());
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -228,6 +250,8 @@ public class PlayMusicViewModel extends AndroidViewModel {
         void randome(boolean isActive);
 
         void repeat(boolean isActive);
+
+        void like(boolean isActive);
     }
 
 }

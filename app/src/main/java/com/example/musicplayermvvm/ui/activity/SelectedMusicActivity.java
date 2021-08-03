@@ -33,10 +33,7 @@ public class SelectedMusicActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_selected_music, ListMusicFragment.newInstance(), TAG_SELCTED_MUSIC_FRAGMENT)
                 .commit();
-        Activity activity=this;
-        AppCompatActivity appCompatActivity=(AppCompatActivity)activity;
-        FragmentManager a=appCompatActivity.getSupportFragmentManager();
-        int af=1;
+
     }
 
     @Override

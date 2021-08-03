@@ -2,6 +2,7 @@ package com.example.musicplayermvvm.data.repository;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.provider.MediaStore;
 
 import androidx.lifecycle.MutableLiveData;
@@ -27,11 +28,19 @@ public class MusicRepository {
         return sMusicRepository;
     }
 
+    public static Music convertDataSourceToMusic(String datasource){
+        for (Music music:mMusicList) {
+            if (music.getFilePath().equals(datasource))
+                return music;
+        }
+        return null;
+    }
+
     //endregion
 
     //region defind variable
     Context mContext;
-    private List<Music> mMusicList;
+    private static List<Music> mMusicList;
 
     private MutableLiveData<List<Music>> mListMutableLiveDataMusic = new MutableLiveData<>();
     private MutableLiveData<List<Artist>> mListMutableLiveDataArtist = new MutableLiveData<>();

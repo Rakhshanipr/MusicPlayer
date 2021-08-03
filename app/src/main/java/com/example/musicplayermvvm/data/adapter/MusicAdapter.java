@@ -31,8 +31,6 @@ public class MusicAdapter
 
     Fragment mFragment;
 
-    Activity mActivity;
-
     public MusicAdapter(Context context, SetMusicCover musicCover
             , Fragment fragment) {
         mContext = context;
@@ -76,8 +74,6 @@ public class MusicAdapter
             mMusicInfoListBinding = musicInfoListBinding;
             mMusicInfoListBinding.setInfoViewModel(
                     null);
-
-
         }
 
         void bind(Music music) {
@@ -92,7 +88,6 @@ public class MusicAdapter
 
             //TODO how not change this code observe for change data
 //            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
-
 
             mMusicInfoListBinding.imageView.setImageBitmap(null);
             mSetMusicCover.queueImageCover(music.getFilePath()

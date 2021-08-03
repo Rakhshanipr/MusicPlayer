@@ -19,7 +19,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public static MainViewPagerAdapter CreateMainViewPager(Activity activity){
-        return new MainViewPagerAdapter((FragmentActivity) activity);
+        return new MainViewPagerAdapter((FragmentActivity) activity, activity.getBaseContext());
     }
 
 }

@@ -48,5 +48,6 @@ public class InfoArtistViewModel extends BaseObservable {
 
         Intent intent = new Intent(mContext, SelectedMusicActivity.class);
         mContext.startActivity(intent);
+
     }
 }
