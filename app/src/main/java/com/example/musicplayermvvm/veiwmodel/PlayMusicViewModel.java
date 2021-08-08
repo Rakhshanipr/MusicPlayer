@@ -12,6 +12,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Music;
+import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.services.MusicService;
 import com.example.musicplayermvvm.utilities.QueryPreferences;
 
@@ -30,7 +31,9 @@ public class PlayMusicViewModel extends AndroidViewModel {
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
 
-    List<Music> mMusicListPrev = new ArrayList<>();
+    List<Music> mMusicListPrev;
+
+    MusicRepository mMusicRepository;
 
     //endregion
 
@@ -40,7 +43,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mContext.bindService(MusicService.newIntent(mContext), mConnection
                 , Context.BIND_AUTO_CREATE);
         mMusicListPrev = new ArrayList<>();
-
+        mMusicRepository=MusicRepository.getInstance(mContext);
     }
 
     public Music getMusic() {
@@ -168,7 +171,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
             QueryPreferences.setMusicLikePref(mContext, getMusic(), false);
         }
 
-
+        mMusicRepository.setLikeMusic(mContext);
     }
 
     public String getTitle() {
@@ -182,8 +185,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
     public int getCurrentMillis() {
         return mMusicService==null? 0: mMusicService.getCurrentPosition();
     }
-
-
 
     public int getFullTimeSeconds() {
         return Music.convertMilliToSecond(mMusic.getDuration());

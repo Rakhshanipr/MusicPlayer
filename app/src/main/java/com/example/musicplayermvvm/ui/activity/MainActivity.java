@@ -5,11 +5,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.CompositePageTransformer;
 
 import android.Manifest;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.repository.MusicRepository;
@@ -36,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mMainBinding=ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mMainBinding.getRoot());
         getPermission();
-
         Initial();
-
     }
 
     private void Initial() {
@@ -59,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions
             , @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if (requestCode==REQUEST_CODE_GET_PERMISSION
                 && grantResults[0]==0){
         }
     }
+
 }

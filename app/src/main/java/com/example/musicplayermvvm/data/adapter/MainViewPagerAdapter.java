@@ -5,12 +5,14 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.ui.fragment.ListAlbumFragment;
 import com.example.musicplayermvvm.ui.fragment.ListArtistFragment;
 import com.example.musicplayermvvm.ui.fragment.ListMusicFragment;
+import com.example.musicplayermvvm.ui.fragment.ListMusicLikeFragment;
 import com.example.musicplayermvvm.utilities.QueryPreferences;
 
 import java.util.List;
@@ -38,11 +40,7 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
         }else if (position==2){
             return ListAlbumFragment.newInstance();
         } else if (position==3){
-            sFragment_state=1;
-
-            sMusicListSelected= QueryPreferences.getMusicsLikePref(mContext);
-
-            return ListMusicFragment.newInstance();
+            return ListMusicLikeFragment.newInstance();
         }
         return null;
     }

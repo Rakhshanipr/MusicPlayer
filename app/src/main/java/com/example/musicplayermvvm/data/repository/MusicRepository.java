@@ -11,6 +11,7 @@ import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
 import com.example.musicplayermvvm.data.model.Album;
 import com.example.musicplayermvvm.data.model.Artist;
 import com.example.musicplayermvvm.data.model.Music;
+import com.example.musicplayermvvm.utilities.QueryPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +37,8 @@ public class MusicRepository {
         return null;
     }
 
+    public static MutableLiveData<List<Music>> sMutableLiveDataLikes=new MutableLiveData<>();
+
     //endregion
 
     //region defind variable
@@ -43,6 +46,7 @@ public class MusicRepository {
     private static List<Music> mMusicList;
 
     private MutableLiveData<List<Music>> mListMutableLiveDataMusic = new MutableLiveData<>();
+    private MutableLiveData<List<Music>> mListMutableLiveDataLikeMusic = new MutableLiveData<>();
     private MutableLiveData<List<Artist>> mListMutableLiveDataArtist = new MutableLiveData<>();
     private MutableLiveData<List<Album>> mListMutableLiveDataAlbum = new MutableLiveData<>();
     //endregion
@@ -54,6 +58,14 @@ public class MusicRepository {
 
     public MutableLiveData<List<Music>> getListMutableLiveDataMusic() {
         return mListMutableLiveDataMusic;
+    }
+
+    public MutableLiveData<List<Music>> getListMutableLiveDataLikeMusic() {
+        return mListMutableLiveDataLikeMusic;
+    }
+
+    public void setListMutableLiveDataLikeMusic(MutableLiveData<List<Music>> listMutableLiveDataLikeMusic) {
+        mListMutableLiveDataLikeMusic = listMutableLiveDataLikeMusic;
     }
 
     public MutableLiveData<List<Artist>> getListMutableLiveDataArtist() {
@@ -194,5 +206,9 @@ public class MusicRepository {
             }
         }
         mListMutableLiveDataAlbum.setValue(albumList);
+    }
+
+    public void setLikeMusic(Context context){
+        mListMutableLiveDataLikeMusic.setValue(QueryPreferences.getMusicsLikePref(context));
     }
 }

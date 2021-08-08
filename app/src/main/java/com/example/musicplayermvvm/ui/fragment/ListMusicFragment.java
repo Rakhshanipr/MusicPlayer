@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.adapter.MainViewPagerAdapter;
+import com.example.musicplayermvvm.data.adapter.MusicAdapter;
+import com.example.musicplayermvvm.data.model.Music;
+import com.example.musicplayermvvm.data.repository.MusicRepository;
 import com.example.musicplayermvvm.databinding.FragmentListMusicBinding;
 import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
+
+import java.util.List;
 
 public class ListMusicFragment extends Fragment {
 
@@ -28,6 +34,8 @@ public class ListMusicFragment extends Fragment {
 
     FragmentListMusicBinding mListMusicBinding;
 
+    Handler mHandler = new Handler();
+
     public ListMusicFragment() {
 
     }
@@ -40,8 +48,8 @@ public class ListMusicFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
         mMusicFragmentViewModel = new
                 ViewModelProvider(requireActivity()).get(ListMusicFragmentViewModel.class);
         mMusicFragmentViewModel.setContext_MusicCover(getContext());
@@ -55,7 +63,6 @@ public class ListMusicFragment extends Fragment {
         mListMusicBinding = DataBindingUtil.inflate(inflater
                 , R.layout.fragment_list_music, container, false);
 
-
         Initial();
 
         return mListMusicBinding.getRoot();
@@ -68,6 +75,16 @@ public class ListMusicFragment extends Fragment {
 
         mListMusicBinding.recyclerViewList.setAdapter(
                 mMusicFragmentViewModel.createAdapterMusic(new Handler(), this));
+
+            MusicRepository.sMutableLiveDataLikes.observe(getActivity(), new Observer<List<Music>>() {
+                @Override
+                public void onChanged(List<Music> music) {
+//                    if (mListMusicBinding != null && MainViewPagerAdapter.sFragment_state==2) {
+//                        ((MusicAdapter)mListMusicBinding.recyclerViewList.getAdapter()).setMusicList(music);
+//                        (mListMusicBinding.recyclerViewList.getAdapter()).notifyDataSetChanged();
+//                    }
+                }
+            });
     }
 
     @Override
@@ -81,12 +98,10 @@ public class ListMusicFragment extends Fragment {
 //                        mMusicFragmentViewModel.createAdapterMusic(new Handler(), this));
 //            }
 //        }
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
     }
 }

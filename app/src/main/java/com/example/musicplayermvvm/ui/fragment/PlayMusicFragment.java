@@ -56,8 +56,6 @@ public class PlayMusicFragment extends Fragment {
         initial();
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,10 +69,8 @@ public class PlayMusicFragment extends Fragment {
 
         mHandler.postDelayed(updateCurrentMusic, 1000);
 
-
         return mPlayMusicBinding.getRoot();
     }
-
 
     private void initial() {
 
@@ -156,17 +152,12 @@ public class PlayMusicFragment extends Fragment {
 
         });
 
-
         try {
             mMusicViewModel.setMusic(mMusic);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
-
 
     private void setListners() {
         mPlayMusicBinding.textViewTitleMusic.setSelected(true);

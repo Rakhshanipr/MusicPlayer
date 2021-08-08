@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/artist_info_list.xml" value="0.1" />
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_lis_music_like.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_list_album.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_list_artist.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_play_music.xml" value="0.25" />

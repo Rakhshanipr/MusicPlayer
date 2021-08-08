@@ -36,6 +36,8 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Music>> mListMusicMutable;
 
+    MutableLiveData<List<Music>> mListMusicLikeMutable;
+
     MutableLiveData<List<Artist>> mListArtistMutable;
 
     MutableLiveData<List<Album>> mListAlbumtMutable;
@@ -62,6 +64,7 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
         mListArtistMutable = mMusicRepository.getListMutableLiveDataArtist();
 
         mListAlbumtMutable = mMusicRepository.getListMutableLiveDataAlbum();
+        mListMusicLikeMutable=mMusicRepository.getListMutableLiveDataLikeMusic();
     }
 
     public MusicAdapter createAdapterMusic(Handler handler, Fragment fragment) {
@@ -129,6 +132,22 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
         mSetMusicCover.getLooper();
         return mSetMusicCover;
+    }
+
+    public MusicAdapter createLikeMusiceAdapter(Handler handler, Fragment fragment){
+        MusicAdapter musicAdapter=new
+                MusicAdapter(mContext,getSetMusicCover(handler),fragment);
+
+        mListMusicLikeMutable.observe((LifecycleOwner) mContext
+                , new Observer<List<Music>>() {
+                    @Override
+                    public void onChanged(List<Music> music) {
+                        musicAdapter.setMusicList(music);
+                        mMusicAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        return musicAdapter;
     }
 
 }
