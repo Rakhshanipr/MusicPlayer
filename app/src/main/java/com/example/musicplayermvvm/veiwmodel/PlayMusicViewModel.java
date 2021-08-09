@@ -3,6 +3,7 @@ package com.example.musicplayermvvm.veiwmodel;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
@@ -43,7 +44,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mContext.bindService(MusicService.newIntent(mContext), mConnection
                 , Context.BIND_AUTO_CREATE);
         mMusicListPrev = new ArrayList<>();
-        mMusicRepository=MusicRepository.getInstance(mContext);
+        mMusicRepository = MusicRepository.getInstance(mContext);
     }
 
     public Music getMusic() {
@@ -163,15 +164,36 @@ public class PlayMusicViewModel extends AndroidViewModel {
     }
 
     public void onLike() {
-        if (QueryPreferences.getMusicLikePref(mContext,getMusic().getFilePath())){
+        if (QueryPreferences.getMusicLikePref(mContext, getMusic().getFilePath())) {
             mReactionMusicPlayer.like(false);
-            QueryPreferences.setMusicLikePref(mContext,getMusic(),true);
-        }else {
+            QueryPreferences.setMusicLikePref(mContext, getMusic(), true);
+        } else {
             mReactionMusicPlayer.like(true);
             QueryPreferences.setMusicLikePref(mContext, getMusic(), false);
         }
 
-        mMusicRepository.setLikeMusic(mContext);
+//        mMusicRepository.setLikeMusic(mContext);
+    }
+
+    public void next10Second() {
+        mMusicService.next10Second();
+        mReactionMusicPlayer.setSeekBar();
+
+    }
+
+    public void prev10Second() {
+        mMusicService.prev10Second();
+        mReactionMusicPlayer.setSeekBar();
+    }
+
+    public void share(){
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getMusic().getFilePath());
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT,getMusic().getName() + "---" + getMusic().getArtist());
+        sendIntent.setType("audio/*");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        mReactionMusicPlayer.shareMusic(shareIntent);
     }
 
     public String getTitle() {
@@ -183,7 +205,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
     }
 
     public int getCurrentMillis() {
-        return mMusicService==null? 0: mMusicService.getCurrentPosition();
+        return mMusicService == null ? 0 : mMusicService.getCurrentPosition();
     }
 
     public int getFullTimeSeconds() {
@@ -204,8 +226,8 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mReactionMusicPlayer.playPauseClicked();
     }
 
-    public boolean isLiked(){
-        return QueryPreferences.getMusicLikePref(mContext,getMusic().getFilePath());
+    public boolean isLiked() {
+        return QueryPreferences.getMusicLikePref(mContext, getMusic().getFilePath());
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -253,6 +275,10 @@ public class PlayMusicViewModel extends AndroidViewModel {
         void repeat(boolean isActive);
 
         void like(boolean isActive);
+
+        void setSeekBar();
+
+        void shareMusic(Intent intent);
     }
 
 }

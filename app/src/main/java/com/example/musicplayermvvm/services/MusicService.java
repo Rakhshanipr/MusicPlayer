@@ -30,7 +30,6 @@ public class MusicService extends Service {
     }
 
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -41,8 +40,20 @@ public class MusicService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void setCallBackMusicService(ICallBackMusicService callBackMusicService){
-        mCallBackMusicService=callBackMusicService;
+    public void setCallBackMusicService(ICallBackMusicService callBackMusicService) {
+        mCallBackMusicService = callBackMusicService;
+    }
+
+    public void next10Second() {
+        if (getMediaPlayer().getCurrentPosition() + 10000 <= getMediaPlayer().getDuration()) {
+            getMediaPlayer().seekTo(getMediaPlayer().getCurrentPosition() + 10000);
+        }
+    }
+
+    public void prev10Second() {
+        if (getMediaPlayer().getCurrentPosition() - 10000 >= 0) {
+            getMediaPlayer().seekTo(getMediaPlayer().getCurrentPosition() - 10000);
+        }
     }
 
     public void setCurrentPosition(int position) {
@@ -98,11 +109,13 @@ public class MusicService extends Service {
         public MusicService getMusicService() {
             return MusicService.this;
         }
-        public void songCompleted(){
+
+        public void songCompleted() {
 
         }
     }
-    public interface ICallBackMusicService{
+
+    public interface ICallBackMusicService {
         void completeSong();
     }
 }

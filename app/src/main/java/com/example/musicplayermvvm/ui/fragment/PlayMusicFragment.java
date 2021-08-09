@@ -1,5 +1,6 @@
 package com.example.musicplayermvvm.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
@@ -148,6 +149,18 @@ public class PlayMusicFragment extends Fragment {
                     mPlayMusicBinding.imageButtonLike.setImageBitmap(
                             BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
                 }
+            }
+
+            @Override
+            public void setSeekBar() {
+                mPlayMusicBinding.textViewPlayedTime.setText(mMusicViewModel.getCurrentPosition());
+                mPlayMusicBinding.seekBarDuration.setProgress(
+                        Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
+            }
+
+            @Override
+            public void shareMusic(Intent intent) {
+                startActivity(intent);
             }
 
         });

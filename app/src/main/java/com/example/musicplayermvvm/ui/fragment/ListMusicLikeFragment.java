@@ -62,6 +62,12 @@ public class ListMusicLikeFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMusicFragmentViewModel.setMusicLikeRepository();
+    }
+
     private void initial() {
 
         mBinding.recyclerViewListMusicLike.setLayoutManager(new
@@ -71,5 +77,4 @@ public class ListMusicLikeFragment extends Fragment {
                 mMusicFragmentViewModel.createLikeMusiceAdapter(new Handler(), this));
 
     }
-
 }

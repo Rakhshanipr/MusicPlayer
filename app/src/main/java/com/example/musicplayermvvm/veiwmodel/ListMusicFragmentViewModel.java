@@ -51,7 +51,6 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
         super(application);
     }
 
-
     public void setContext_MusicCover(Context context) {
 
         mContext = context;
@@ -122,6 +121,10 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
         mMusicRepository.setArtistList();
         return mArtistAdapter;
+    }
+
+    public void setMusicLikeRepository(){
+        mMusicRepository.setLikeMusic(mContext);
     }
 
     public AlbumAdapter createAdapterAlbum(Handler handler, Context context) {
