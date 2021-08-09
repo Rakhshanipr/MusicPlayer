@@ -64,6 +64,7 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
         mListArtistMutable = mMusicRepository.getListMutableLiveDataArtist();
 
         mListAlbumtMutable = mMusicRepository.getListMutableLiveDataAlbum();
+
         mListMusicLikeMutable=mMusicRepository.getListMutableLiveDataLikeMusic();
     }
 
@@ -84,6 +85,24 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
             mMusicRepository.setMusicList();
 
         return mMusicAdapter;
+    }
+
+    public MusicAdapter createLikeMusiceAdapter(Handler handler, Fragment fragment){
+        MusicAdapter musicAdapter=new
+                MusicAdapter(mContext,getSetMusicCover(handler),fragment);
+
+        mListMusicLikeMutable.observe((LifecycleOwner) mContext
+                , new Observer<List<Music>>() {
+                    @Override
+                    public void onChanged(List<Music> music) {
+                        musicAdapter.setMusicList(music);
+                        musicAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        mMusicRepository.setLikeMusic(mContext);
+
+        return musicAdapter;
     }
 
     public ArtistAdapter createAdapterArtist(Handler handler, Context context) {
@@ -133,21 +152,4 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
         mSetMusicCover.getLooper();
         return mSetMusicCover;
     }
-
-    public MusicAdapter createLikeMusiceAdapter(Handler handler, Fragment fragment){
-        MusicAdapter musicAdapter=new
-                MusicAdapter(mContext,getSetMusicCover(handler),fragment);
-
-        mListMusicLikeMutable.observe((LifecycleOwner) mContext
-                , new Observer<List<Music>>() {
-                    @Override
-                    public void onChanged(List<Music> music) {
-                        musicAdapter.setMusicList(music);
-                        mMusicAdapter.notifyDataSetChanged();
-                    }
-                });
-
-        return musicAdapter;
-    }
-
 }

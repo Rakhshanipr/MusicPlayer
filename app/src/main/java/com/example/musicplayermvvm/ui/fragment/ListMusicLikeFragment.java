@@ -32,11 +32,7 @@ public class ListMusicLikeFragment extends Fragment {
     FragmentListMusicLikeBinding mBinding;
 
     ListMusicFragmentViewModel mMusicFragmentViewModel;
-    public ListMusicLikeFragment() {
-        // Required empty public constructor
-    }
 
-    // TODO: Rename and change types and number of parameters
     public static ListMusicLikeFragment newInstance() {
         ListMusicLikeFragment fragment = new ListMusicLikeFragment();
         Bundle args = new Bundle();
