@@ -1,20 +1,20 @@
 package com.example.musicplayermvvm.data.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.MusicInfoListBinding;
 import com.example.musicplayermvvm.thread.SetMusicCover;
+import com.example.musicplayermvvm.utilities.LRUCache;
 import com.example.musicplayermvvm.veiwmodel.InfoMusicViewModel;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class MusicAdapter
         mContext = context;
         mMusicList = new ArrayList<>();
         mSetMusicCover = musicCover;
-        mFragment=fragment;
+        mFragment = fragment;
     }
 
     public void setMusicList(List<Music> musicList) {
@@ -56,10 +56,9 @@ public class MusicAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MusicAdapter.MusicHolder holder, int position) {
-        if (mMusicList.get(position)!=null){
+        if (mMusicList.get(position) != null) {
             holder.bind(mMusicList.get(position));
         }
-
     }
 
     @Override
@@ -75,27 +74,31 @@ public class MusicAdapter
         public MusicHolder(MusicInfoListBinding musicInfoListBinding) {
             super(musicInfoListBinding.getRoot());
             mMusicInfoListBinding = musicInfoListBinding;
-            mMusicInfoListBinding.setInfoViewModel(
-                    null);
+
+//            viewModel.getMusicLiveData().observe((LifecycleOwner) mContext
+//                    , new Observer<Music>() {
+//                        @Override
+//                        public void onChanged(Music music) {
+//                            musicInfoListBinding.textViewTitle.setText(music.getName());
+//                            musicInfoListBinding.textViewSigner.setText(music.getArtist());
+//                            musicInfoListBinding.textViewTime.setText(music.getFormatedTime());
+//                        }
+//                    });
+
+            mMusicInfoListBinding.setInfoViewModel(new
+                    InfoMusicViewModel((InfoMusicViewModel.ICallbackMusicInfo) mFragment.getActivity()));
         }
 
         void bind(Music music) {
 
             mMusic = music;
 
-            InfoMusicViewModel musicViewModel=new
-                    InfoMusicViewModel((InfoMusicViewModel.ICallbackMusicInfo) mFragment.getActivity());
-            musicViewModel.setMusic(mMusic);
+            mMusicInfoListBinding.getInfoViewModel().setMusic(mMusic);
             mMusicInfoListBinding.setContext(mContext);
-            mMusicInfoListBinding.setInfoViewModel(musicViewModel);
 
-            //TODO how not change this code observe for change data
-//            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
+                mSetMusicCover.queueImageCover(music.getFilePath()
+                        , mMusicInfoListBinding.imageView);
 
-            mMusicInfoListBinding.imageView.setImageBitmap(null);
-
-            mSetMusicCover.queueImageCover(music.getFilePath()
-                 ,mMusicInfoListBinding.imageView);
         }
     }
 }

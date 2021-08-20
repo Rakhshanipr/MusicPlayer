@@ -1,28 +1,15 @@
 package com.example.musicplayermvvm.veiwmodel;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
-import com.example.musicplayermvvm.ui.activity.PlayMusicActivity;
 
-public class InfoMusicViewModel {
+public class InfoMusicViewModel extends BaseObservable {
 
     Music mMusic;
-
-    MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
 
     ICallbackMusicInfo mCallbackMusicInfo;
 
@@ -36,15 +23,7 @@ public class InfoMusicViewModel {
 
     public void setMusic(Music music) {
         mMusic = music;
-        mMusicLiveData.setValue(music);
-    }
-
-    public MutableLiveData<Music> getMusicLiveData() {
-        return mMusicLiveData;
-    }
-
-    public void setMusicLiveData(MutableLiveData<Music> musicLiveData) {
-        mMusicLiveData = musicLiveData;
+        notifyChange();
     }
 
     public ICallbackMusicInfo getCallbackMusicInfo() {
@@ -55,16 +34,19 @@ public class InfoMusicViewModel {
         mCallbackMusicInfo = callbackMusicInfo;
     }
 
+    @Bindable
     public String getTitle() {
-        return mMusic.getName();
+        return mMusic == null ? " " : mMusic.getName();
     }
 
+    @Bindable
     public String getTime() {
-        return mMusic.getFormatedTime();
+        return mMusic == null ? " " : mMusic.getFormatedTime();
     }
 
+    @Bindable
     public String getSigner() {
-        return mMusic.getArtist();
+        return mMusic == null ? " " : mMusic.getArtist();
     }
 
     public void onClickMusic(Context context) {
@@ -75,7 +57,7 @@ public class InfoMusicViewModel {
 
     }
 
-    public interface ICallbackMusicInfo{
+    public interface ICallbackMusicInfo {
         void onMusicClick(Music music);
     }
 }

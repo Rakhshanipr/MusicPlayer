@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.musicplayermvvm.utilities.LRUCache;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SetMusicCover extends HandlerThread {
@@ -27,6 +29,8 @@ public class SetMusicCover extends HandlerThread {
 
     ConcurrentHashMap<String,ImageView> mHashMap=new ConcurrentHashMap<>();
 
+    LRUCache mLRUCache=LRUCache.getInstance();
+
     public SetMusicCover() {
         super(TAG_MUSIC_COVER);
     }
@@ -39,6 +43,7 @@ public class SetMusicCover extends HandlerThread {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
+
 
                 if (msg.what==WHAT){
 
@@ -59,6 +64,7 @@ public class SetMusicCover extends HandlerThread {
                             @Override
                             public void run() {
                                 mHashMap.get(path).setImageBitmap(songImage);
+                                mLRUCache.putBitmap(path,songImage);
                             }
                         });
                     }
@@ -78,9 +84,22 @@ public class SetMusicCover extends HandlerThread {
     }
 
     public void queueImageCover(String filePath, ImageView imageView){
-        mHashMap.put(filePath,imageView);
 
-        mRequstHandler.obtainMessage(WHAT,filePath).sendToTarget();
+        Bitmap bitmap=mLRUCache.getbitmap(filePath);
+        if ( bitmap!= null) {
+
+            mHandlerSetPhoto.post(new Runnable() {
+                @Override
+                public void run() {
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+        }else {
+
+            mHashMap.put(filePath, imageView);
+
+            mRequstHandler.obtainMessage(WHAT, filePath).sendToTarget();
+        }
 
     }
 

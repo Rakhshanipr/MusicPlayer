@@ -61,6 +61,7 @@ public class MusicService extends Service {
         mMusic = music;
         sMusicAvailible=true;
         sMusic=music;
+
     }
 
     public void next10Second() {

@@ -84,6 +84,19 @@ public class MainActivity extends AppCompatActivity implements InfoMusicViewMode
     @Override
     protected void onResume() {
         super.onResume();
+        if (MusicService.sMusicAvailible&&mMainBinding.containerNavigationMusicBar.getVisibility()==View.INVISIBLE){
+            mMainBinding.containerNavigationMusicBar.setVisibility(View.VISIBLE);
+
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_music_bar);
+            if (fragment == null) {
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_music_bar, MusicBarFragment.newInstance(MusicService.sMusic))
+                        .commit();
+            } else {
+                ((MusicBarFragment) fragment).updateInfo(MusicService.sMusic);
+            }
+        }
     }
 
     @Override

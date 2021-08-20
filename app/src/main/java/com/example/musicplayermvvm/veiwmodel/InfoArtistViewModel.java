@@ -19,7 +19,7 @@ public class InfoArtistViewModel extends BaseObservable {
     public InfoArtistViewModel(Artist artist, Context context) {
         mArtist = artist;
         mContext=context;
-        notifyPropertyChanged(3);
+
     }
 
     public Artist getArtist() {
@@ -28,6 +28,7 @@ public class InfoArtistViewModel extends BaseObservable {
 
     public void setArtist(Artist artist) {
         mArtist = artist;
+        notifyChange();
     }
 
     @Bindable
