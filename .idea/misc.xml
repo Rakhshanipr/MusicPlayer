@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/activity_play_music.xml" value="0.1" />
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/activity_selected_music.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/artist_info_list.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_lis_music_like.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_list_album.xml" value="0.1" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_list_artist.xml" value="0.1" />
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_list_music_like.xml" value="0.14583333333333334" />
+        <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_music_bar.xml" value="0.2222222222222222" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/fragment_play_music.xml" value="0.25" />
         <entry key="..\:/Project/Android/My project/MusicPlayerMVVM/app/src/main/res/layout/music_info_list.xml" value="0.1" />
       </map>

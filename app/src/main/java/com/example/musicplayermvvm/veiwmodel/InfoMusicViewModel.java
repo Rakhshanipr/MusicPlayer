@@ -24,8 +24,14 @@ public class InfoMusicViewModel {
 
     MutableLiveData<Music> mMusicLiveData=new MutableLiveData<>();
 
+    ICallbackMusicInfo mCallbackMusicInfo;
+
     public Music getMusic() {
         return mMusic;
+    }
+
+    public InfoMusicViewModel(ICallbackMusicInfo callbackMusicInfo) {
+        mCallbackMusicInfo = callbackMusicInfo;
     }
 
     public void setMusic(Music music) {
@@ -39,6 +45,14 @@ public class InfoMusicViewModel {
 
     public void setMusicLiveData(MutableLiveData<Music> musicLiveData) {
         mMusicLiveData = musicLiveData;
+    }
+
+    public ICallbackMusicInfo getCallbackMusicInfo() {
+        return mCallbackMusicInfo;
+    }
+
+    public void setCallbackMusicInfo(ICallbackMusicInfo callbackMusicInfo) {
+        mCallbackMusicInfo = callbackMusicInfo;
     }
 
     public String getTitle() {
@@ -55,8 +69,13 @@ public class InfoMusicViewModel {
 
     public void onClickMusic(Context context) {
 
-        context.startActivity(
-                PlayMusicActivity.newIntent(context,getMusic()));
+        getCallbackMusicInfo().onMusicClick(mMusic);
+//        context.startActivity(
+//                PlayMusicActivity.newIntent(context,getMusic()));
 
+    }
+
+    public interface ICallbackMusicInfo{
+        void onMusicClick(Music music);
     }
 }

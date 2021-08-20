@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SetMusicCover extends HandlerThread {
 
-
     public static final String TAG_MUSIC_COVER = "SetMusicCover";
     public static final int WHAT = 0;
     Handler mRequstHandler;

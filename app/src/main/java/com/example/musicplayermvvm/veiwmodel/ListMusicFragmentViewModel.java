@@ -1,19 +1,15 @@
 package com.example.musicplayermvvm.veiwmodel;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 
 import com.example.musicplayermvvm.data.adapter.AlbumAdapter;
 import com.example.musicplayermvvm.data.adapter.ArtistAdapter;
@@ -44,8 +40,6 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
     Context mContext;
 
-    MusicAdapter mMusicAdapter;
-
     //endregion
     public ListMusicFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -64,31 +58,35 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
 
         mListAlbumtMutable = mMusicRepository.getListMutableLiveDataAlbum();
 
-        mListMusicLikeMutable=mMusicRepository.getListMutableLiveDataLikeMusic();
+        mListMusicLikeMutable = mMusicRepository.getListMutableLiveDataLikeMusic();
+    }
+
+    public void setMusicLiveData() {
+        mMusicRepository.setMusicList();
     }
 
     public MusicAdapter createAdapterMusic(Handler handler, Fragment fragment) {
 
-        mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler),fragment);
+        MusicAdapter mMusicAdapter = new MusicAdapter(mContext, getSetMusicCover(handler), fragment);
 
-            mListMusicMutable.observe((LifecycleOwner) mContext
-                    , new Observer<List<Music>>() {
-                        @Override
-                        public void onChanged(List<Music> music) {
+        mListMusicMutable.observe((LifecycleOwner) mContext
+                , new Observer<List<Music>>() {
+                    @Override
+                    public void onChanged(List<Music> music) {
                             mMusicAdapter.setMusicList(music);
-                            MainViewPagerAdapter.sMusicListFull=music;
+                            MainViewPagerAdapter.sMusicListFull = music;
                             mMusicAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    }
+                });
 
-            mMusicRepository.setMusicList();
+        mMusicRepository.setMusicList();
 
         return mMusicAdapter;
     }
 
-    public MusicAdapter createLikeMusiceAdapter(Handler handler, Fragment fragment){
-        MusicAdapter musicAdapter=new
-                MusicAdapter(mContext,getSetMusicCover(handler),fragment);
+    public MusicAdapter createLikeMusiceAdapter(Handler handler, Fragment fragment) {
+        MusicAdapter musicAdapter = new
+                MusicAdapter(mContext, getSetMusicCover(handler), fragment);
 
         mListMusicLikeMutable.observe((LifecycleOwner) mContext
                 , new Observer<List<Music>>() {
@@ -123,7 +121,7 @@ public class ListMusicFragmentViewModel extends AndroidViewModel {
         return mArtistAdapter;
     }
 
-    public void setMusicLikeRepository(){
+    public void setMusicLikeRepository() {
         mMusicRepository.setLikeMusic(mContext);
     }
 

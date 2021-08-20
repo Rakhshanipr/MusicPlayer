@@ -35,6 +35,7 @@ public class PlayMusicFragment extends Fragment {
     }
     //endregion
 
+    //region defind variable
     Handler mHandler = new Handler();
     FragmentPlayMusicBinding mPlayMusicBinding;
     Music mMusic;
@@ -49,12 +50,15 @@ public class PlayMusicFragment extends Fragment {
             mHandler.postDelayed(this, 1000);
         }
     };
+    //endregion
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMusicViewModel = new ViewModelProvider(requireActivity()).get(PlayMusicViewModel.class);
 
         initial();
+
     }
 
     @Override
@@ -77,7 +81,6 @@ public class PlayMusicFragment extends Fragment {
 
         mMusic = (Music) getArguments().getSerializable(ARGS_KEY_MUSIC);
 
-        mMusicViewModel = new ViewModelProvider(requireActivity()).get(PlayMusicViewModel.class);
 
         mMusicViewModel.setReactionMusicPlayer(new PlayMusicViewModel.IReactionMusicPlayer() {
             @Override
@@ -95,6 +98,16 @@ public class PlayMusicFragment extends Fragment {
             public void setInfo(Music music) {
                 mPlayMusicBinding.textViewTitleMusic.setText(music.getName());
                 mPlayMusicBinding.textViewDuration.setText(music.getFormatedTime());
+                mPlayMusicBinding.textViewPlayedTime.setText(mMusicViewModel.getCurrentPosition());
+                mPlayMusicBinding.seekBarDuration.setProgress(
+                        Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
+                if (mMusicViewModel.isPlaying()) {
+                    mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
+                            AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
+                } else {
+                    mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
+                            AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
+                }
 
                 //region setCover
                 mMusic=music;
@@ -160,13 +173,13 @@ public class PlayMusicFragment extends Fragment {
 
             @Override
             public void shareMusic(Intent intent) {
-                startActivity(intent);
+//                startActivity(intent);
             }
 
         });
 
         try {
-            mMusicViewModel.setMusic(mMusic);
+            mMusicViewModel.setMusicPlayActivity(mMusic);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -201,5 +214,13 @@ public class PlayMusicFragment extends Fragment {
             mPlayMusicBinding.imageButtonLike.setImageBitmap(
                     BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
         }
+
+        mPlayMusicBinding.imageButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
+
 }

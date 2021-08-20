@@ -56,7 +56,10 @@ public class MusicAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MusicAdapter.MusicHolder holder, int position) {
-        holder.bind(mMusicList.get(position));
+        if (mMusicList.get(position)!=null){
+            holder.bind(mMusicList.get(position));
+        }
+
     }
 
     @Override
@@ -80,16 +83,17 @@ public class MusicAdapter
 
             mMusic = music;
 
-            InfoMusicViewModel musicViewModel=new InfoMusicViewModel();
+            InfoMusicViewModel musicViewModel=new
+                    InfoMusicViewModel((InfoMusicViewModel.ICallbackMusicInfo) mFragment.getActivity());
             musicViewModel.setMusic(mMusic);
             mMusicInfoListBinding.setContext(mContext);
             mMusicInfoListBinding.setInfoViewModel(musicViewModel);
-
 
             //TODO how not change this code observe for change data
 //            mMusicInfoListBinding.getInfoViewModel().setMusic(music);
 
             mMusicInfoListBinding.imageView.setImageBitmap(null);
+
             mSetMusicCover.queueImageCover(music.getFilePath()
                  ,mMusicInfoListBinding.imageView);
         }

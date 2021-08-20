@@ -14,7 +14,6 @@ import com.example.musicplayermvvm.ui.activity.SelectedMusicActivity;
 public class InfoArtistViewModel extends BaseObservable {
 
     Artist mArtist;
-    FragmentManager mFragmentManager;
     Context mContext;
 
     public InfoArtistViewModel(Artist artist, Context context) {
@@ -45,7 +44,6 @@ public class InfoArtistViewModel extends BaseObservable {
 
         MainViewPagerAdapter.sFragment_state=1;
         MainViewPagerAdapter.sMusicListSelected =mArtist.getMusicList();
-
         Intent intent = new Intent(mContext, SelectedMusicActivity.class);
         mContext.startActivity(intent);
 

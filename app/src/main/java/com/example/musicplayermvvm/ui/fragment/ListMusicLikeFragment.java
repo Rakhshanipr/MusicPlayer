@@ -22,11 +22,6 @@ import com.example.musicplayermvvm.veiwmodel.ListMusicFragmentViewModel;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListMusicLikeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ListMusicLikeFragment extends Fragment {
 
     FragmentListMusicLikeBinding mBinding;
@@ -57,7 +52,6 @@ public class ListMusicLikeFragment extends Fragment {
         mMusicFragmentViewModel.setContext_MusicCover(getContext());
 
         initial();
-
 
         return mBinding.getRoot();
     }

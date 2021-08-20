@@ -7,6 +7,9 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.example.musicplayermvvm.data.model.Music;
+import com.example.musicplayermvvm.data.repository.MusicRepository;
+
 import java.io.IOException;
 
 public class MusicService extends Service {
@@ -19,11 +22,17 @@ public class MusicService extends Service {
 
     //endregion
 
+    public static boolean sMusicAvailible = false;
+    public static Music sMusic=null;
+
     MediaPlayer mMediaPlayer;
     String mPath = "";
     ICallBackMusicService mCallBackMusicService;
 
     IBinder mBinder = new MusicBinder();
+
+    Music mMusic;
+
 
     public MusicService() {
 
@@ -42,6 +51,16 @@ public class MusicService extends Service {
 
     public void setCallBackMusicService(ICallBackMusicService callBackMusicService) {
         mCallBackMusicService = callBackMusicService;
+    }
+
+    public Music getMusic() {
+        return mMusic;
+    }
+
+    public void setMusic(Music music) {
+        mMusic = music;
+        sMusicAvailible=true;
+        sMusic=music;
     }
 
     public void next10Second() {
@@ -68,11 +87,14 @@ public class MusicService extends Service {
         if (getMediaPlayer() == null) {
             mMediaPlayer = new MediaPlayer();
         }
+
+        sMusicAvailible=true;
         mPath = path;
         mMediaPlayer.reset();
         mMediaPlayer.setDataSource(path);
         mMediaPlayer.prepare();
         mMediaPlayer.start();
+        setMusic(MusicRepository.convertDataSourceToMusic(path));
 
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

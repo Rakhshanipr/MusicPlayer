@@ -75,29 +75,23 @@ public class ListMusicFragment extends Fragment {
 
         mListMusicBinding.recyclerViewList.setAdapter(
                 mMusicFragmentViewModel.createAdapterMusic(new Handler(), this));
-
-            MusicRepository.sMutableLiveDataLikes.observe(getActivity(), new Observer<List<Music>>() {
-                @Override
-                public void onChanged(List<Music> music) {
-//                    if (mListMusicBinding != null && MainViewPagerAdapter.sFragment_state==2) {
-//                        ((MusicAdapter)mListMusicBinding.recyclerViewList.getAdapter()).setMusicList(music);
-//                        (mListMusicBinding.recyclerViewList.getAdapter()).notifyDataSetChanged();
-//                    }
-                }
-            });
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-//        if (mListMusicBinding != null && mMusicFragmentViewModel!=null) {
-//            if (MainViewPagerAdapter.sFragment_state == 1) {
-//                mMusicFragmentViewModel.setContext_MusicCover(getContext());
-//                mListMusicBinding.recyclerViewList.setAdapter(
-//                        mMusicFragmentViewModel.createAdapterMusic(new Handler(), this));
-//            }
-//        }
+        if (mListMusicBinding != null && mMusicFragmentViewModel!=null) {
+            if (MainViewPagerAdapter.sFragment_state == 0) {
+                mMusicFragmentViewModel.setMusicLiveData();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 
     @Override
