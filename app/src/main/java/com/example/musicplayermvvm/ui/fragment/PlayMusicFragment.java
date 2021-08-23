@@ -90,7 +90,7 @@ public class PlayMusicFragment extends Fragment {
                             AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
                 } else {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
                 }
             }
 
@@ -106,7 +106,7 @@ public class PlayMusicFragment extends Fragment {
                             AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
                 } else {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
                 }
 
                 //region setCover

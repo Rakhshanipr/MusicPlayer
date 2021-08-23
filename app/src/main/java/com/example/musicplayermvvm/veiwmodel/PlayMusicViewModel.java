@@ -32,7 +32,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
     boolean mBound = false;
     IReactionMusicPlayer mReactionMusicPlayer;
 
-    List<Music> mMusicListPrev;
+    public static List<Music> mMusicListPrev;
 
     MusicRepository mMusicRepository;
 
@@ -43,7 +43,8 @@ public class PlayMusicViewModel extends AndroidViewModel {
         mContext = getApplication().getApplicationContext();
         mContext.bindService(MusicService.newIntent(mContext), mConnection
                 , Context.BIND_AUTO_CREATE);
-        mMusicListPrev = new ArrayList<>();
+        if (mMusicListPrev == null)
+            mMusicListPrev = new ArrayList<>();
         mMusicRepository = MusicRepository.getInstance(mContext);
     }
 
@@ -93,8 +94,8 @@ public class PlayMusicViewModel extends AndroidViewModel {
         }
     }
 
-    public void setMusicPlayActivity(Music music) throws Exception{
-        mMusic=music;
+    public void setMusicPlayActivity(Music music) throws Exception {
+        mMusic = music;
     }
 
     public void setReactionMusicPlayer(IReactionMusicPlayer reactionMusicPlayer) {
@@ -132,7 +133,14 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
     public void prevMusic() {
         try {
-            if (mMusicListPrev.size() != 0) {
+            if (mMusicListPrev.size() == 1) {
+                mMusicService.changeMediaPlayerData(mMusicListPrev
+                        .get(0).getFilePath());
+
+                setMusic(mMusicListPrev
+                        .get(0));
+                mMusicListPrev.remove(0);
+            } else if (mMusicListPrev.size() != 0) {
                 mMusicService.changeMediaPlayerData(mMusicListPrev
                         .get(mMusicListPrev.size() - 2).getFilePath());
 
@@ -242,7 +250,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             mMusicService = binder.getMusicService();
             mBound = true;
-            if (mMusicService.getMusic()==null) {
+            if (mMusicService.getMusic() == null) {
                 setServicesData();
                 mMusicService.setMusic(mMusic);
             }
@@ -261,6 +269,21 @@ public class PlayMusicViewModel extends AndroidViewModel {
                         nextMusic();
                     }
                 }
+
+                @Override
+                public void playPause() {
+                    playMuisc();
+                }
+
+                @Override
+                public void next() {
+                    nextMusic();
+                }
+
+                @Override
+                public void prev() {
+                    prevMusic();
+                }
             });
             mReactionMusicPlayer.setInfo(mMusic);
         }
@@ -268,6 +291,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
+            mContext.unbindService(mConnection);
         }
     };
 
@@ -286,5 +310,4 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
         void shareMusic(Intent intent);
     }
-
 }

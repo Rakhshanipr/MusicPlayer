@@ -94,7 +94,6 @@ public class MusicAdapter
             mMusic = music;
 
             mMusicInfoListBinding.getInfoViewModel().setMusic(mMusic);
-            mMusicInfoListBinding.setContext(mContext);
 
                 mSetMusicCover.queueImageCover(music.getFilePath()
                         , mMusicInfoListBinding.imageView);

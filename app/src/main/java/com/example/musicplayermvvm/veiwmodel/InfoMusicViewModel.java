@@ -1,5 +1,7 @@
 package com.example.musicplayermvvm.veiwmodel;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 
 import androidx.databinding.BaseObservable;
@@ -49,11 +51,9 @@ public class InfoMusicViewModel extends BaseObservable {
         return mMusic == null ? " " : mMusic.getArtist();
     }
 
-    public void onClickMusic(Context context) {
+    public void onClickMusic() {
 
         getCallbackMusicInfo().onMusicClick(mMusic);
-//        context.startActivity(
-//                PlayMusicActivity.newIntent(context,getMusic()));
 
     }
 

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class MusicBarFragment extends Fragment {
                             AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
                 } else {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
                 }
             }
 
@@ -102,7 +103,7 @@ public class MusicBarFragment extends Fragment {
                             AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
                 } else {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.playmusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
                 }
                 mBinding.seekBar.setProgress(
                         Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
@@ -176,7 +177,7 @@ public class MusicBarFragment extends Fragment {
         try {
             mMusicViewModel.setMusic(music);
         } catch (Exception e) {
-            e.printStackTrace();
+           Log.e("TAG_NOT",e.getMessage());
         }
     }
 
