@@ -1,5 +1,6 @@
 package com.example.musicplayermvvm.ui.fragment;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,8 @@ import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.FragmentMusicBarBinding;
 import com.example.musicplayermvvm.services.MusicService;
 import com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel;
+
+import javax.xml.XMLConstants;
 
 public class MusicBarFragment extends Fragment {
 
@@ -183,6 +186,11 @@ public class MusicBarFragment extends Fragment {
 
     private void setListners() {
         mBinding.textViewBarTitleName.setSelected(true);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

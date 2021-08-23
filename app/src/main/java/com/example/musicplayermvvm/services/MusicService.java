@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 public class MusicService extends Service {
     public static final String BUNDLE_CALL_BACK = "bundle_CallBack";
+    public static final int ID_MUSIC_NOTIFICATION = 0;
 
     //region defind static method and variable
 
@@ -118,7 +119,7 @@ public class MusicService extends Service {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0, notification);
+        notificationManager.notify(ID_MUSIC_NOTIFICATION, notification);
 
     }
 
