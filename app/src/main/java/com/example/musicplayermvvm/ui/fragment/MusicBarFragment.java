@@ -88,10 +88,10 @@ public class MusicBarFragment extends Fragment {
             public void playPauseClicked() {
                 if (mMusicViewModel.isPlaying()) {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_pause_24));
                 } else {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_play_arrow_24));
                 }
             }
 
@@ -103,10 +103,10 @@ public class MusicBarFragment extends Fragment {
                 mBinding.textViewBarTime.setText(mMusicViewModel.getCurrentPosition());
                 if (mMusicViewModel.isPlaying()) {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_pause_24));
                 } else {
                     mBinding.imageButtonBarPlay.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_play_arrow_24));
                 }
                 mBinding.seekBar.setProgress(
                         Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
@@ -127,7 +127,7 @@ public class MusicBarFragment extends Fragment {
 
                 } else {
                     mBinding.imageView2.setImageDrawable(
-                            getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                            getResources().getDrawable(R.drawable.default_image_round));
                 }
 
                 //endregion

@@ -50,6 +50,7 @@ public class MusicAdapter
 
         MusicInfoListBinding musicInfoListBinding = DataBindingUtil.inflate(
                 inflater, R.layout.music_info_list, parent, false);
+        musicInfoListBinding.textViewTitle.setSelected(true);
 
         return new MusicHolder(musicInfoListBinding);
     }
@@ -75,16 +76,6 @@ public class MusicAdapter
             super(musicInfoListBinding.getRoot());
             mMusicInfoListBinding = musicInfoListBinding;
 
-//            viewModel.getMusicLiveData().observe((LifecycleOwner) mContext
-//                    , new Observer<Music>() {
-//                        @Override
-//                        public void onChanged(Music music) {
-//                            musicInfoListBinding.textViewTitle.setText(music.getName());
-//                            musicInfoListBinding.textViewSigner.setText(music.getArtist());
-//                            musicInfoListBinding.textViewTime.setText(music.getFormatedTime());
-//                        }
-//                    });
-
             mMusicInfoListBinding.setInfoViewModel(new
                     InfoMusicViewModel((InfoMusicViewModel.ICallbackMusicInfo) mFragment.getActivity()));
         }
@@ -97,7 +88,6 @@ public class MusicAdapter
 
                 mSetMusicCover.queueImageCover(music.getFilePath()
                         , mMusicInfoListBinding.imageView);
-
         }
     }
 }

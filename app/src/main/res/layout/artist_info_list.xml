@@ -13,46 +13,59 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{()-> Info_ViewModel.onClickLayout()}"
-        android:background="#E4B9B9">
+        android:layout_width="160dp"
+        android:layout_height="220dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#989494"
+        android:onClick="@{()-> Info_ViewModel.onClickLayout()}">
 
         <ImageView
             android:id="@+id/imageView_artist"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/round_outline"
             android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:theme="@drawable/round_outline"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.121"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/textView_name"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            tools:text="TextView"
+            android:layout_marginTop="24dp"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/amiko"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:text="@{Info_ViewModel.name}"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView_artist"
-            app:layout_constraintTop_toTopOf="@+id/imageView_artist" />
+            android:textColor="#090909"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_artist"
+            app:layout_constraintStart_toStartOf="@+id/imageView_artist"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_artist"
+            tools:text="TextView" />
 
         <TextView
             android:id="@+id/textView_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="TextView"
+            android:fontFamily="@font/amiko"
             android:text="@{Info_ViewModel.count}"
-            android:textColor="#555252"
+            android:textColor="#434343"
             android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_name"
             app:layout_constraintStart_toStartOf="@+id/textView_name"
-            app:layout_constraintTop_toBottomOf="@+id/textView_name" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_name"
+            tools:text="TextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

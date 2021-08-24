@@ -10,10 +10,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@android:style/Animation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:backgroundTint="#B59F9F">
+        android:background="@drawable/ombre_teal_and_white_background__1_">
 
         <SeekBar
             android:id="@+id/seekBar_duration"
@@ -27,7 +27,7 @@
             android:clickable="true"
             android:max="@{MusicPlayViewModel.fullTimeSeconds}"
             android:min="0"
-            android:progressTint="#431495"
+            android:progressTint="#046E64"
             app:layout_constraintBottom_toTopOf="@+id/imageButton_minus"
             app:layout_constraintEnd_toStartOf="@+id/textView_duration"
             app:layout_constraintHorizontal_bias="0.0"
@@ -35,83 +35,104 @@
 
         <ImageButton
             android:id="@+id/imageButton_play_puase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/playMusic"
             android:onClick="@{()-> MusicPlayViewModel.playMuisc()}"
             android:padding="0dp"
-            android:src="@mipmap/pausemusic"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_next"
-            app:layout_constraintTop_toTopOf="@+id/imageButton_next" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_pause_24_red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/imageButton_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:layout_marginStart="8dp"
+            android:background="@color/playMusic"
             android:onClick="@{()-> MusicPlayViewModel.nextMusic()}"
-            android:src="@android:drawable/ic_media_next"
-
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton_round"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_round"
-            app:layout_constraintTop_toTopOf="@+id/imageButton_round" />
-
-        <ImageButton
-            android:id="@+id/imageButton_prev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()-> MusicPlayViewModel.prevMusic()}"
-            android:src="@android:drawable/ic_media_previous"
-
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton_play_puase"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_play_puase"
-            app:layout_constraintTop_toTopOf="@+id/imageButton_play_puase" />
-
-        <ImageButton
-            android:id="@+id/imageButton_round"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:onClick="@{()-> MusicPlayViewModel.repeat()}"
-
-            android:src="@android:drawable/stat_notify_sync_noanim"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton_minus"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_minus"
-            app:layout_constraintTop_toTopOf="@+id/imageButton_minus" />
-
-        <ImageButton
-            android:id="@+id/imageButton_random"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:onClick="@{()-> MusicPlayViewModel.randome()}"
-
-            android:src="@android:drawable/ic_delete"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_skip_next_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_prev"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton_prev"
+            app:layout_constraintStart_toEndOf="@+id/imageButton_play_puase"
             app:layout_constraintTop_toTopOf="@+id/imageButton_prev" />
 
         <ImageButton
-            android:id="@+id/imageButton_minus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imageButton_prev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="8dp"
+
+            android:background="@color/playMusic"
+            android:onClick="@{()-> MusicPlayViewModel.prevMusic()}"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_skip_previous_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton_play_puase"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton_play_puase"
+            app:layout_constraintTop_toTopOf="@+id/imageButton_play_puase"
+            app:layout_constraintVertical_bias="0.55" />
+
+        <ImageButton
+            android:id="@+id/imageButton_round"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:layout_marginStart="8dp"
+            android:background="@color/playMusic"
+            android:onClick="@{()-> MusicPlayViewModel.repeat()}"
+            android:scaleType="fitXY"
+            android:src="@drawable/renew"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton_next"
+            app:layout_constraintStart_toEndOf="@+id/imageButton_next"
+            app:layout_constraintTop_toTopOf="@+id/imageButton_next"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/imageButton_random"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:layout_marginEnd="8dp"
+            android:background="@color/playMusic"
+            android:onClick="@{()-> MusicPlayViewModel.randome()}"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_shuffle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton_prev"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton_prev"
+            app:layout_constraintTop_toTopOf="@+id/imageButton_prev"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/imageButton_minus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/playMusic"
             android:onClick="@{()-> MusicPlayViewModel.next10Second()}"
-            android:layout_marginBottom="24dp"
-            android:src="@android:drawable/ic_media_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:scaleType="fitXY"
+            android:src="@drawable/forward_music_5"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton_round"
+            app:layout_constraintStart_toEndOf="@+id/imageButton_round"
+            app:layout_constraintTop_toTopOf="@+id/imageButton_round"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/imageButton_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/playMusic"
             android:onClick="@{()-> MusicPlayViewModel.prev10Second()}"
-            android:src="@android:drawable/ic_media_previous"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_music5"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton_random"
             app:layout_constraintEnd_toStartOf="@+id/imageButton_random"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageButton_random" />
+            app:layout_constraintTop_toTopOf="@+id/imageButton_random"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView_title_music"
@@ -153,45 +174,47 @@
 
         <ImageButton
             android:id="@+id/imageButton_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:onClick="@{()-> MusicPlayViewModel.share()}"
 
-            android:src="@android:drawable/ic_menu_share"
+            android:background="@drawable/ic_baseline_share_24"
+            android:onClick="@{()-> MusicPlayViewModel.share()}"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/imageButton_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:src="?attr/actionModeCloseDrawable"
+            android:background="@drawable/ic_baseline_keyboard_backspace_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/imageButton_like"
-            android:layout_width="39dp"
-            android:layout_height="43dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="@{()-> MusicPlayViewModel.onLike()}"
+            android:layout_marginBottom="4dp"
 
-            android:src="@android:drawable/star_big_on"
+            android:onClick="@{()-> MusicPlayViewModel.onLike()}"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/textView_title_music"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/imageView_mainImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/imageButton_like"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

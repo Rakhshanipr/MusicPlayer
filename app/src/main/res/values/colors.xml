@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="paasedTime">#FFFFFFFF</color>
+    <color name="fullTime">#05AD0B</color>
+    <color name="backGroundMusic">#202020</color>
+    <color name="titleMusicInfo">#F3F3F3</color>
+    <color name="artistMusicInfo">#C84319</color>
+    <color name="barMusic">#A765B3</color>
+    <color name="playMusic">#f9bcc4</color>
 </resources>

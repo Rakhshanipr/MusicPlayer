@@ -99,13 +99,13 @@ public class MusicService extends Service {
                 this, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this, CreateNotification.CHANELL)
-                .setSmallIcon(R.mipmap.pausemusic)
-                .setLargeIcon(GetMusicPicture.convertBitmap(sMusic.getFilePath()))
+                .setSmallIcon(R.drawable.music_icon)
+                .setLargeIcon(GetMusicPicture.convertBitmap(getApplication().getApplicationContext(),sMusic.getFilePath()))
                 .setContentTitle(sMusic.getName())
                 .setContentText(sMusic.getArtist())
-                .addAction(R.drawable.previous_music, "previuos", prevPendingIntent)
+                .addAction(R.drawable.ic_skip_previous_black_24dp, "previuos", prevPendingIntent)
                 .addAction(iconPlayPause, "play", playPendingIntent)
-                .addAction(R.drawable.next_music, "next", nextPendingIntent)
+                .addAction(R.drawable.ic_skip_next_black_24dp, "next", nextPendingIntent)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView()
                         .setMediaSession(mMediaSessionCompat.getSessionToken()))
@@ -162,7 +162,7 @@ public class MusicService extends Service {
         mMediaPlayer.start();
 
         setMusic(MusicRepository.convertDataSourceToMusic(path));
-        showNotification(R.drawable.pause_music);
+        showNotification(R.drawable.ic_baseline_pause_24);
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -186,11 +186,11 @@ public class MusicService extends Service {
     public void playPauseMusic() {
         if (getMediaPlayer().isPlaying()) {
             getMediaPlayer().pause();
-            showNotification(R.drawable.play_music);
+            showNotification(R.drawable.ic_baseline_play_arrow_24);
         }
         else{
             getMediaPlayer().start();
-            showNotification(R.drawable.pause_music);
+            showNotification(R.drawable.ic_baseline_pause_24);
         }
     }
 

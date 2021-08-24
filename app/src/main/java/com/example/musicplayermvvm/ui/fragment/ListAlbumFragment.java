@@ -51,7 +51,7 @@ public class    ListAlbumFragment extends Fragment {
 
     private void initial() {
 
-        mListBinding.recyclerViewListAlbum.setLayoutManager(new GridLayoutManager(getContext(),1));
+        mListBinding.recyclerViewListAlbum.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         mListBinding.recyclerViewListAlbum.setAdapter(
                 mMusicFragmentViewModel.createAdapterAlbum(new Handler(),

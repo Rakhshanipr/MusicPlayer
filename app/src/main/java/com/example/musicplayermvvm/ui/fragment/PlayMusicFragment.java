@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.musicplayermvvm.R;
 import com.example.musicplayermvvm.data.model.Music;
 import com.example.musicplayermvvm.databinding.FragmentPlayMusicBinding;
+import com.example.musicplayermvvm.utilities.QueryPreferences;
 import com.example.musicplayermvvm.veiwmodel.PlayMusicViewModel;
 
 public class PlayMusicFragment extends Fragment {
@@ -87,10 +88,10 @@ public class PlayMusicFragment extends Fragment {
             public void playPauseClicked() {
                 if (mMusicViewModel.isPlaying()) {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_pause_24_red));
                 } else {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_play_arrow_24_red));
                 }
             }
 
@@ -103,10 +104,10 @@ public class PlayMusicFragment extends Fragment {
                         Music.convertMilliToSecond(mMusicViewModel.getCurrentMillis()), true);
                 if (mMusicViewModel.isPlaying()) {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.mipmap.pausemusic));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_pause_24_red));
                 } else {
                     mPlayMusicBinding.imageButtonPlayPuase.setImageDrawable(
-                            AppCompatResources.getDrawable(getContext(), R.drawable.play_music));
+                            AppCompatResources.getDrawable(getContext(), R.drawable.ic_baseline_play_arrow_24_red));
                 }
 
                 //region setCover
@@ -125,42 +126,46 @@ public class PlayMusicFragment extends Fragment {
 
                 }else{
                     mPlayMusicBinding.imageViewMainImage.setImageDrawable(
-                            getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                            getResources().getDrawable(R.drawable.music_icon));
                 }
 
                     //endregion
                 like(mMusicViewModel.isLiked());
+                randome(QueryPreferences.getRandomPref(getContext().getApplicationContext()));
+                repeat(QueryPreferences.getRepeatPref(getContext().getApplicationContext()));
             }
 
             @Override
             public void randome(boolean isActive) {
                 if (isActive){
-                    //Tobe change view of randome image button
+                    mPlayMusicBinding.imageButtonRandom.setImageDrawable(
+                            getResources().getDrawable(R.drawable.ic_baseline_shuffle_24_red));
                 }
                 else{
-
+                    mPlayMusicBinding.imageButtonRandom.setImageDrawable(
+                            getResources().getDrawable(R.drawable.ic_baseline_shuffle_24));
                 }
             }
 
             @Override
             public void repeat(boolean isActive){
                 if (isActive){
-                    //Tobe change view of randome image button
+                    mPlayMusicBinding.imageButtonRound.setImageDrawable(
+                            getResources().getDrawable(R.drawable.renew_red));
                 }
                 else{
-
+                    mPlayMusicBinding.imageButtonRound.setImageDrawable(
+                            getResources().getDrawable(R.drawable.renew));
                 }
             }
 
             @Override
             public void like(boolean isActive) {
                 if (isActive){
-                    mPlayMusicBinding.imageButtonLike.setImageBitmap(
-                            BitmapFactory.decodeResource(getResources(), R.mipmap.like));
+                    mPlayMusicBinding.imageButtonLike.setBackground( getResources().getDrawable( R.drawable.ic_baseline_favorite_24_red));
                 }
                 else{
-                    mPlayMusicBinding.imageButtonLike.setImageBitmap(
-                            BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
+                    mPlayMusicBinding.imageButtonLike.setBackground( getResources().getDrawable( R.drawable.ic_baseline_favorite_24));
                 }
             }
 
@@ -173,7 +178,7 @@ public class PlayMusicFragment extends Fragment {
 
             @Override
             public void shareMusic(Intent intent) {
-//                startActivity(intent);
+                startActivity(intent);
             }
 
         });
@@ -207,12 +212,10 @@ public class PlayMusicFragment extends Fragment {
         });
 
         if (mMusicViewModel.isLiked()){
-            mPlayMusicBinding.imageButtonLike.setImageBitmap(
-                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground));
+            mPlayMusicBinding.imageButtonLike.setBackground( getResources().getDrawable(R.drawable.ic_baseline_favorite_24_red));
         }
         else{
-            mPlayMusicBinding.imageButtonLike.setImageBitmap(
-                    BitmapFactory.decodeResource(getResources(), R.mipmap.unlike));
+            mPlayMusicBinding.imageButtonLike.setBackground( getResources().getDrawable( R.drawable.ic_baseline_favorite_24));
         }
 
         mPlayMusicBinding.imageButtonBack.setOnClickListener(new View.OnClickListener() {

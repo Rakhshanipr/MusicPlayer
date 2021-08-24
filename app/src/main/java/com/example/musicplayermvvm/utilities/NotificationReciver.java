@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.example.musicplayermvvm.services.MusicService;
@@ -19,11 +21,17 @@ public class NotificationReciver extends BroadcastReceiver {
     String mAction;
     Context mContext;
 
+    TelephonyManager telManager;
+    Context context;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context.getApplicationContext();
         mContext.bindService(MusicService.newIntent(context), mConnection
                 , Context.BIND_AUTO_CREATE);
+        telManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        telManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
         mAction = intent.getAction();
 
     }
@@ -62,5 +70,27 @@ public class NotificationReciver extends BroadcastReceiver {
         }
     };
 
+    private final PhoneStateListener phoneListener = new PhoneStateListener() {
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            try {
+                switch (state) {
+                    case TelephonyManager.CALL_STATE_RINGING: {
+                        mMusicService.getMediaPlayer().pause();
+                        break;
+                    }
+                    case TelephonyManager.CALL_STATE_OFFHOOK: {
+                        mMusicService.getMediaPlayer().pause();
+                        break;
+                    }
+                    case TelephonyManager.CALL_STATE_IDLE: {
+                        break;
+                    }
+                    default: { }
+                }
+            } catch (Exception ex) {
 
+            }
+        }
+    };
 }

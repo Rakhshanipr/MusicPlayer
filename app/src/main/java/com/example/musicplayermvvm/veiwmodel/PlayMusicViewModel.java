@@ -78,6 +78,11 @@ public class PlayMusicViewModel extends AndroidViewModel {
         if (mReactionMusicPlayer == null) {
             throw new Exception("must be set Interface reaction");
         }
+        if (mMusic != null) {
+            if (mMusic.getPrev() == music) {
+                mMusicListPrev.clear();
+            }
+        }
         mMusic = music;
         if (mMusicListPrev.size() <= 1) {
             mMusicListPrev.add(music);
@@ -87,7 +92,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
                 mMusicListPrev.add(music);
             }
         }
-
         if (mMusicService != null) {
             mMusicService.changeMediaPlayerData(music.getFilePath());
             mReactionMusicPlayer.setInfo(mMusic);
@@ -133,14 +137,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
 
     public void prevMusic() {
         try {
-            if (mMusicListPrev.size() == 1) {
-                mMusicService.changeMediaPlayerData(mMusicListPrev
-                        .get(0).getFilePath());
-
-                setMusic(mMusicListPrev
-                        .get(0));
-                mMusicListPrev.remove(0);
-            } else if (mMusicListPrev.size() != 0) {
+            if (mMusicListPrev.size() > 1) {
                 mMusicService.changeMediaPlayerData(mMusicListPrev
                         .get(mMusicListPrev.size() - 2).getFilePath());
 
@@ -148,8 +145,6 @@ public class PlayMusicViewModel extends AndroidViewModel {
                         .get(mMusicListPrev.size() - 2));
                 mMusicListPrev.remove(mMusicListPrev.size() - 1);
             } else {
-                mMusicService.changeMediaPlayerData(getMusic().getPrev().getFilePath());
-
                 setMusic(getMusic().getPrev());
             }
 
@@ -168,7 +163,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
             QueryPreferences.setRandomPref(mContext, false);
         } else
             QueryPreferences.setRandomPref(mContext, true);
-        mReactionMusicPlayer.randome(isActive);
+        mReactionMusicPlayer.randome(!isActive);
     }
 
     public void repeat() {
@@ -177,7 +172,7 @@ public class PlayMusicViewModel extends AndroidViewModel {
             QueryPreferences.setRepeatPref(mContext, false);
         } else
             QueryPreferences.setRepeatPref(mContext, true);
-        mReactionMusicPlayer.repeat(isActive);
+        mReactionMusicPlayer.repeat(!isActive);
     }
 
     public void onLike() {

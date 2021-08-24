@@ -53,7 +53,7 @@ public class ListArtistFragment extends Fragment {
 
     private void initial() {
 
-        mListBinding.recyclerViewListArtist.setLayoutManager(new GridLayoutManager(getContext(),1));
+        mListBinding.recyclerViewListArtist.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         mListBinding.recyclerViewListArtist.setAdapter(
                 mMusicFragmentViewModel.createAdapterArtist(new Handler(),

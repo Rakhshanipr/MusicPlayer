@@ -13,12 +13,12 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#25A0D8"
+            android:background="#90349F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabIconTint="#8F5ED5"
-            app:tabIndicatorColor="#E8EAE6"
+            app:tabIndicatorColor="#2196F3"
             app:tabTextColor="#FFFFFF" />
 
 
@@ -26,6 +26,7 @@
             android:id="@+id/viewPager2_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tab_layout"
             tools:layout_editor_absoluteX="-8dp">

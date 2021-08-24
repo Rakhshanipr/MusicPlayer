@@ -2,6 +2,7 @@ package com.example.musicplayermvvm.thread;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.musicplayermvvm.R;
+import com.example.musicplayermvvm.ui.activity.MainActivity;
 import com.example.musicplayermvvm.utilities.LRUCache;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -72,7 +75,7 @@ public class SetMusicCover extends HandlerThread {
                         mHandlerSetPhoto.post(new Runnable() {
                             @Override
                             public void run() {
-                                mHashMap.get(path).setImageBitmap(null);
+                                mHashMap.get(path).setImageBitmap(MainActivity.mBitmap);
                             }
                         });
 

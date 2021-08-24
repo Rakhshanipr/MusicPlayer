@@ -42,6 +42,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistHold
         ArtistInfoListBinding artistInfoListBinding= DataBindingUtil.inflate(inflater
                 ,R.layout.artist_info_list,parent,false);
 
+        artistInfoListBinding.textViewName.setSelected(true);
         return new ArtistHolder(artistInfoListBinding);
     }
 

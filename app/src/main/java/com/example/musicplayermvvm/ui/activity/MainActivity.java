@@ -43,13 +43,14 @@ public class MainActivity extends AppCompatActivity implements InfoMusicViewMode
 
     Music mMusic;
 
+    public static Bitmap mBitmap;
     ActivityMainBinding mMainBinding;
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mBitmap=BitmapFactory.decodeResource(getResources(),R.mipmap.music_icon);
         mMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
 
@@ -72,11 +73,6 @@ public class MainActivity extends AppCompatActivity implements InfoMusicViewMode
         if (requestCode == REQUEST_CODE_GET_PERMISSION
                 && grantResults[0] == 0) {
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -114,11 +110,6 @@ public class MainActivity extends AppCompatActivity implements InfoMusicViewMode
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     private void Initial() {
         mMainBinding.viewPager2Main.setAdapter(
                 MainActivityViewModel.CreateMainViewPager(this)
@@ -139,17 +130,5 @@ public class MainActivity extends AppCompatActivity implements InfoMusicViewMode
             this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
                     , REQUEST_CODE_GET_PERMISSION);
         }
-    }
-
-    @Override
-    public void onPanelClosed(int featureId, @NonNull Menu menu) {
-        super.onPanelClosed(featureId, menu);
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(MusicService.ID_MUSIC_NOTIFICATION);
     }
 }
