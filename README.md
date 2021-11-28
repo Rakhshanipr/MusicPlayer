@@ -7,6 +7,7 @@ A personal Music app project.
   <img src="http://www.upsara.com/images/n415247_.jpg" height="390" width="210" title="hover text">
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 <BR><BR>
+  <PRE>
 1. Architecture: 
      - MVVM
      - LiveData
@@ -19,3 +20,4 @@ A personal Music app project.
      - Fragment
      - Animation
      - TabLayout
+  </PRE>
