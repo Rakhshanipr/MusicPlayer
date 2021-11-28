@@ -1,7 +1,7 @@
 # MusicPlayer
 A personal Music app project.
 # Screenshots
-![music-shot](https://github.com/Rakhshanipr/html/blob/master/1.jpg)
+![music-shot](https://s4.uupload.ir/files/1_9fhz.jpg)
 # Libraries Used
 1. Architecture: 
    - MVC
