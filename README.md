@@ -1,8 +1,11 @@
 # MusicPlayer
 A personal Music app project.
 # Screenshots
-![music-shot](https://s4.uupload.ir/files/1_9fhz.jpg)
-![music-shot](http://www.upsara.com/images/f098767_.jpg)
+<p align="center">
+  <img src="https://s4.uupload.ir/files/1_9fhz.jpg" height="390" width="210" title="hover text">
+  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  <img src="http://www.upsara.com/images/f098767_.jpg" height="390" width="210" title="hover text">
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 # Libraries Used
 1. Architecture: 
      - MVVM
