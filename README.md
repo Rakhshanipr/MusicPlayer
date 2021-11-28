@@ -2,9 +2,9 @@
 A personal Music app project.
 # Screenshots
 <p align="center">
-  <img src="https://s4.uupload.ir/files/1_9fhz.jpg" height="390" width="210" title="hover text">
+  <img src="http://www.upsara.com/images/m998962_.jpg" height="390" width="210" title="hover text">
   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-  <img src="http://www.upsara.com/images/f098767_.jpg" height="390" width="210" title="hover text">
+  <img src="http://www.upsara.com/images/n415247_.jpg" height="390" width="210" title="hover text">
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 # Libraries Used
 1. Architecture: 
