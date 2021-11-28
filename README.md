@@ -1,7 +1,7 @@
 # MusicPlayer
 A personal Music app project.
 # Screenshots
-![music-shot](https://s4.uupload.ir/files/1_9fhz.jpg)
+![music-shot](https://s4.uupload.ir/files/1_9fhz.jpg)  (http://www.upsara.com/images/f098767_.jpg)
 # Libraries Used
 1. Architecture: 
    - MVC
